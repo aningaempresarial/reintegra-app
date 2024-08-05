@@ -15,25 +15,33 @@ export default StyleSheet.create({
     title: {
       fontSize: 30,
       fontWeight: 'bold',
+      letterSpacing: 2,
+      color: '#112257',
     },
     text: {
-      fontSize: 24
+      fontSize: 24,
+    },
+    inputBox: {
+      flexDirection: 'row',
+      backgroundColor: '#fff',
+      width: '70%',
+      padding: 10,
+      borderRadius: 10,
+      borderColor: 'rgba(0,0,0,0.3)',
+      borderWidth: 1
     },
     input: {
       zIndex: 2,
-      width: '70%',
-      backgroundColor: '#fff',
-      padding: 10,
       fontSize: 20,
-      borderColor: 'rgba(0,0,0,0.2)',
-      borderWidth: 1,
-      borderRadius: 10,
-      color: 'rgba(0,0,0,0.5)'
+      color: 'rgba(0,0,0,0.5)',
+      paddingLeft: 10,
+      outlineColor: 'transparent'
     },
     button: {
       backgroundColor: '#112257',
       padding: 10,
       paddingHorizontal: 20,
+      borderColor: '#fff'
     },
     buttonText: {
       color: '#fff',

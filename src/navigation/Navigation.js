@@ -9,7 +9,7 @@ const Stack = createNativeStackNavigator();
 
 function Navigation() {
   return (
-    <Stack.Navigator initialRouteName='Signup'>
+    <Stack.Navigator initialRouteName='Splash'>
       <Stack.Screen name="Splash" component={Splash} options={{ headerShown: false }}/>
       <Stack.Screen name="Home" component={Home} options={{ headerShown: false }}/>
       <Stack.Screen name="Login" component={Login} options={{ headerShown: false }}/>

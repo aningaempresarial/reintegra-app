@@ -10,7 +10,8 @@ export default StyleSheet.create({
     background: {
       width: '100%',
       height: '100%',
-      position: 'absolute'
+      position: 'absolute',
+      opacity: 0.9
     },
     textContainer: {
       width: '100%',

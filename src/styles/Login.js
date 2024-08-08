@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 export default StyleSheet.create({
     container: {
       flex: 1,
-      justifyContent: 'space-evenly',
+      justifyContent: 'center',
       alignItems: 'center',
       backgroundColor: '#fff',
     },
@@ -12,27 +12,37 @@ export default StyleSheet.create({
       height: '100%',
       position: 'absolute'
     },
+    textContainer: {
+      width: '100%',
+      justifyContent: 'center',
+      alignItems: 'center'
+    },
     title: {
-      fontSize: 30,
+      fontSize: 26,
       fontWeight: 'bold',
       letterSpacing: 2,
       color: '#112257',
+      width: 'calc(70% + 30px)',
+      padding: 15,
     },
     text: {
-      fontSize: 24,
+      fontSize: 20,
+      width: 'calc(70% + 30px)',
+      paddingHorizontal: 15
     },
     inputContainer: {
       justifyContent: 'center',
       alignItems: 'center',
-      width: '100%'
+      width: '100%',
+      marginVertical: 15
     },
     inputBox: {
       flexDirection: 'row',
       backgroundColor: '#fff',
       width: '70%',
       padding: 10,
+      marginVertical: 15,
       borderRadius: 10,
-      margin: 10,
       borderColor: 'rgba(0,0,0,0.3)',
       borderWidth: 1
     },

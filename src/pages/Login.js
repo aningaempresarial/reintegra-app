@@ -11,7 +11,7 @@ function Login() {
   return (
     <View style={styles.container}>
       <ImageBackground source={require('../../assets/images/fundo-cadastro.png')} resizeMode="cover" style={styles.background}></ImageBackground>
-      <View>
+      <View style={styles.textContainer}>
         <Text style={styles.title}>Entrar na conta</Text>
         <Text style={styles.text}>Faça o login para continuar</Text>
       </View>

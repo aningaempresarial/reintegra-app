@@ -58,6 +58,7 @@ export default StyleSheet.create({
       padding: 10,
       paddingHorizontal: 20,
       borderColor: '#fff',
+      borderRadius: 10
     },
     buttonText: {
       color: '#fff',

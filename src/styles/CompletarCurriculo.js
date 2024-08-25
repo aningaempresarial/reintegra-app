@@ -5,102 +5,71 @@ export default StyleSheet.create({
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: '#fff',
     },
-    background: {
+    header: {
+      flex: 1,
       width: '100%',
-      height: '100%',
-      position: 'absolute',
-      opacity: 0.9
-    },
-    textContainer: {
-      width: '100%',
-      justifyContent: 'center',
-      alignItems: 'center'
+      paddingTop: 20
     },
     title: {
-      fontSize: 26,
+      fontSize: 30,
       fontWeight: 'bold',
       letterSpacing: 2,
       color: '#112257',
-      width: 'calc(70% + 30px)',
-      padding: 15,
+      textAlign: 'left',
+      width: '60%',
     },
-    text: {
-      fontSize: 16,
-      width: '90%',
-    },
-    textJust: {
-      fontSize: 16,
+    subtitle: {
+      fontSize: 20,
+      fontWeight: '400',
+      letterSpacing: 2,
+      color: '#112257',
+      textAlign: 'left',
       width: '100%',
-      textAlign: 'justify'
     },
-    inputContainer: {
+    main: {
+      flex: 5,
+      flexDirection: 'column',
+      width: '95%',
+      marginTop: 10
+    },
+    card: {
+      justifyContent: 'center',
+      flex: 1,
+      width: '100%',
+      padding: 20,
+      marginBottom: 10,
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center'
+    },
+    cardN: {
+      height: 'auto',
+      width: '100%',
+      padding: 10,
+      justifyContent: 'center',
+      marginBottom: 10,
+      flexDirection: 'row',
       justifyContent: 'center',
       alignItems: 'center',
-      width: '100%',
-      marginVertical: 15
+      flexWrap: 'wrap'
     },
-    inputBox: {
+    cardContainer: {
+      display: 'flex',
       flexDirection: 'row',
-      backgroundColor: '#fff',
-      width: '70%',
-      padding: 10,
-      marginVertical: 15,
-      borderRadius: 10,
-      borderColor: 'rgba(0,0,0,0.3)',
-      borderWidth: 1
+      flexWrap: 'wrap',
+      flex: 3,
     },
-    input: {
-      zIndex: 2,
-      fontSize: 20,
-      color: 'rgba(0,0,0,0.5)',
-      paddingLeft: 10,
-      outlineColor: 'transparent'
-    },
-    button: {
-      backgroundColor: '#112257',
-      padding: 10,
-      paddingHorizontal: 20,
-      borderColor: '#fff'
-    },
-    buttonText: {
-      color: '#fff',
-      fontSize: 18,
-      textTransform: 'uppercase',
-      letterSpacing: 1,
-      fontWeight: '600'
-    },
-    button1: {
-      backgroundColor: '#ef4232',
-      padding: 20,
-      paddingHorizontal: 20,
-      width: 300,
-      borderRadius: 50,
-      margin: 20
-    },
-    buttonText: {
-      color: '#fff',
-      fontSize: 20,
-      textTransform: 'uppercase',
-      letterSpacing: 1,
+    textCard: {
+      fontSize: 30,
       fontWeight: 'bold',
+      letterSpacing: 2,
+      color: '#fff',
+      textTransform: 'uppercase',
+      textAlign: 'left',
+      width: '100%',
+      flex: 1,
       textAlign: 'center'
-    },
-    pinInput: {
-      width: 25,
-      height: 50,
-      borderTopWidth: 0,
-      borderLeftWidth: 0,
-      borderRightWidth: 0,
-      borderRadius: 0,
-      borderBottomWidth: 2,
-      borderColor: '#ef4232'
-    },
-    errorText: {
-      color: '#EE4B2B',
-      fontSize: 16,
-      width: '90%'
     },
     modal: {
       flex: 1,

@@ -22,13 +22,20 @@ export default StyleSheet.create({
       fontWeight: 'bold',
       letterSpacing: 2,
       color: '#112257',
-      width: 'calc(70% + 30px)',
-      padding: 15,
+      width: '100%',
+      textAlign: 'center'
+    },
+    textCenter: {
+      textAlign: 'center'
     },
     text: {
       fontSize: 20,
-      width: 'calc(70% + 30px)',
-      paddingHorizontal: 15
+      width: '90%',
+    },
+    textJust: {
+      fontSize: 20,
+      width: '100%',
+      textAlign: 'justify'
     },
     inputContainer: {
       justifyContent: 'center',
@@ -62,9 +69,97 @@ export default StyleSheet.create({
     },
     buttonText: {
       color: '#fff',
-      fontSize: 18,
+      fontSize: 16,
       textTransform: 'uppercase',
       letterSpacing: 1,
-      fontWeight: '600'
+      fontWeight: '600',
+      width: '100%',
+      textAlign: 'center'
+    },
+    buttonText2: {
+      color: '#112257',
+      fontSize: 16,
+      textTransform: 'uppercase',
+      letterSpacing: 1,
+      fontWeight: '600',
+      width: '100%',
+      textAlign: 'center'
+    },
+    buttonSmallText: {
+      color: '#fff',
+      fontSize: 14,
+      textTransform: 'uppercase',
+      letterSpacing: 1,
+      fontWeight: '600',
+      width: '100%',
+      textAlign: 'center'
+    },
+    buttonSmallText2: {
+      color: '#112257',
+      fontSize: 14,
+      textTransform: 'uppercase',
+      letterSpacing: 1,
+      fontWeight: '600',
+      width: '100%',
+      textAlign: 'center'
+    },
+    modal: {
+      flex: 1,
+      width: '100%',
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: 'rgba(0, 0, 0, 0.8)'
+    },
+    modalContent: {
+      backgroundColor: '#fff',
+      borderRadius: 10,
+      minHeight: 300,
+      width: '90%',
+      shadowColor: '#000',
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 4,
+      elevation: 5,
+      padding: 20
+    },
+    boldText: {
+      fontWeight: 'bold',
+    },
+    buttonConfirm: {
+      backgroundColor: '#112257',
+      padding: 20,
+      paddingHorizontal: 20,
+      flex: 1,
+      borderRadius: 20,
+      margin: 10
+    },
+    button1: {
+      backgroundColor: '#ef4232',
+      padding: 20,
+      paddingHorizontal: 20,
+      flex: 1,
+      borderRadius: 20,
+      margin: 10
+    },
+    button2: {
+      borderColor: '#112257',
+      borderWidth: 1,
+      padding: 20,
+      paddingHorizontal: 20,
+      flex: 1,
+      borderRadius: 20,
+      margin: 10
+    },
+    botoes: {
+      flexDirection: 'row',
+      width: '95%'
+    },
+    errorText: {
+      color: '#EE4B2B',
+      fontSize: 16,
+      width: '90%'
     }
 })

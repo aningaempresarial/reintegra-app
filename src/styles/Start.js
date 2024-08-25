@@ -31,7 +31,7 @@ export default StyleSheet.create({
       fontWeight: 'bold'
     },
     imageDiv: {
-      flex: 1,
+      flex: 0.8,
       width: '100%',
       alignItems: 'center',
       justifyContent: 'flex-end'

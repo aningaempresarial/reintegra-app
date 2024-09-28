@@ -8,6 +8,10 @@ import Choice from '../pages/Choice';
 import SetupPass from '../pages/SetupPass';
 import CompletarCurriculo from '../pages/CompletarCurriculo';
 import Home from '../pages/Home';
+import Vagas from '../pages/Vagas';
+import Vaga from '../pages/Vaga';
+import Culturas from '../pages/Culturas';
+import Chat from '../pages/Chat';
 
 const Stack = createNativeStackNavigator();
 
@@ -20,11 +24,19 @@ function Navigation() {
       <Stack.Screen name="Signup" component={Signup} options={{ headerShown: false }}/>
       <Stack.Screen name="Choice" component={Choice} options={{ headerShown: false }}/>
       <Stack.Screen name="SetupPass" component={SetupPass} options={{ headerShown: false }}/>
-
       
       <Stack.Screen name="CompletarCurriculo" component={CompletarCurriculo} options={{ headerShown: false }}/>
       
       <Stack.Screen name="Home" component={Home} options={{ headerShown: false }}/>
+
+      <Stack.Screen name="Vagas" component={Vagas} options={{ headerShown: false }}/>
+
+      <Stack.Screen name="Vaga" component={Vaga} options={{ headerShown: false }}/>
+
+      <Stack.Screen name="Culturas" component={Culturas} options={{ headerShown: false }}/>
+
+      <Stack.Screen name="Chat" component={Chat} options={{ headerShown: false }}/>
+
     </Stack.Navigator>
   );
 }

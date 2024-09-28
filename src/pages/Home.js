@@ -154,7 +154,7 @@ const Home = () => {
               >Educação</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={[styles.cardCategoria, {marginRight: 0} ]}>
+            <TouchableOpacity style={[styles.cardCategoria, {marginRight: 0} ]} onPress={() => navigation.navigate('Culturas')}>
               <Image
                 style={styles.cardCategoriaImage}
                 source={require('../../assets/images/cultura-card-image.png')}

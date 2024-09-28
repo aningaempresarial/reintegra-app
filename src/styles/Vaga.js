@@ -53,6 +53,8 @@ export default StyleSheet.create({
   },
   textBtnVaga: {
     color: 'white',
-    fontSize: 16
+    fontSize: 16,
+    letterSpacing: 1.5,
+    fontWeight: '500'
   },
 });

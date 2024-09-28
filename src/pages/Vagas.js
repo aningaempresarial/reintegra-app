@@ -22,6 +22,8 @@ import LoadingModal from "../components/LoadingModal";
 
 function Vagas() {
 
+  const navigation = useNavigation();
+
   let [fontsLoaded] = useFonts({
     Poppins_400Regular,
     Poppins_700Bold,
@@ -33,7 +35,7 @@ function Vagas() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Navbar/>
+      <Navbar />
       <ScrollView style={{ width: "100%", backgroundColor: "#f5f8ff" }}>
         <View style={styles.main}>
           <View style={styles.searchBarContainer}>
@@ -49,7 +51,7 @@ function Vagas() {
           <Text style={styles.title}>Vagas</Text>
 
           <View style={styles.vagasContainer}>
-            <View style={styles.cardVaga}>
+            <View style={styles.cardCultura}>
               <View style={styles.imgVagaContainer}>
                 <Image
                   style={styles.imgVaga}
@@ -58,12 +60,12 @@ function Vagas() {
               </View>
               <View style={styles.infosVaga}>
                 <Text style={styles.textVaga}>Vaga de carpinteiro</Text>
-                <TouchableOpacity style={styles.btnVaga}>
+                <TouchableOpacity style={styles.btnVaga} onPress={() => navigation.navigate('Vaga')}>
                   <Text style={styles.textBtnVaga}>Candidatar-se</Text>
                 </TouchableOpacity>
               </View>
             </View>
-            <View style={styles.cardVaga}>
+            <View style={styles.cardCultura}>
               <View style={styles.imgVagaContainer}>
                 <Image
                   style={styles.imgVaga}

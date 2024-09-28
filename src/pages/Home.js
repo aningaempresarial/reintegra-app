@@ -6,8 +6,11 @@ import IconA from 'react-native-vector-icons/FontAwesome';
 import { Navbar } from '../components/Navbar';
 import PagerView from 'react-native-pager-view';
 import { formatarTempoDecorrido } from '../functions/formatarTempo';
+import { useNavigation } from '@react-navigation/native';
 
 const Home = () => {
+  const navigation = useNavigation();
+
   const [currentPage, setCurrentPage] = useState(1);
 
   const [destaques, setDestaques] = useState([
@@ -134,7 +137,7 @@ const Home = () => {
 
           <View style={styles.cardCategoriasContainer}>
 
-            <TouchableOpacity style={[styles.cardCategoria, {marginLeft: 0} ]}>
+            <TouchableOpacity style={[styles.cardCategoria, {marginLeft: 0} ]} onPress={() => navigation.navigate('Vagas')}>
               <Image
                 style={styles.cardCategoriaImage}
                 source={require('../../assets/images/emprego-card-image.png')}

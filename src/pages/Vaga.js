@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -7,6 +7,7 @@ import {
   Pressable,
   TouchableOpacity,
   ScrollView,
+  Modal
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import styles from "../styles/Vaga";
@@ -19,8 +20,16 @@ import {
   useFonts,
 } from "@expo-google-fonts/poppins";
 import LoadingModal from "../components/LoadingModal";
+import axios from "axios";
+import { API_URL } from "../constraints";
+import { getItem } from "../functions/AsyncStorage";
 
-function Vaga() {
+function Vaga({ route }) {
+  const navigation = useNavigation();
+
+  const [modalCandidato, setModalCandidato] = useState(false);
+  const { vagaId, nomeVaga, textoVaga, imagemVaga, empresaVaga } = route.params || {};
+
   let [fontsLoaded] = useFonts({
     Poppins_400Regular,
     Poppins_700Bold,
@@ -35,37 +44,75 @@ function Vaga() {
       <Navbar />
       <ScrollView style={{ width: "100%", backgroundColor: "#f5f8ff" }}>
         <View style={styles.main}>
-          <Text style={styles.title}>Vaga de carpinteiro</Text>
+          <Text style={styles.title}>{nomeVaga}</Text>
 
           <View style={styles.imgVagaContainer}>
             <Image
-              source={require("../../assets/images/destaque-carpintaria.png")}
+              source={{ uri: imagemVaga }}
               style={styles.imgVaga}
             />
           </View>
           <View style={styles.detalhesVagaContainer}>
-            <Text style={styles.detalhesVaga}>
-              Responsabilidades: Identificar e desenvolver novas oportunidades
-              de negócios. Manter e fortalecer relacionamentos com clientes
-              existentes. Apresentar propostas e negociar contratos.
-            </Text>
-            <Text style={styles.detalhesVaga}>
-            Requisitos
-              Mínimos: Experiência mínima de 2 anos em vendas. Habilidade em
-              negociação e comunicação. Formação superior em Administração,
-              Marketing ou áreas relacionadas. Disponibilidade para viagens.
-            </Text>
-            <Text style={styles.detalhesVaga}>
-                Benefícios: Salário competitivo + comissão. Vale refeição e vale
-              transporte. Plano de saúde e seguro de vida. Oportunidades de
-              desenvolvimento profissional.
-            </Text>
+            <Text style={styles.detalhesVaga}>{textoVaga}</Text>
           </View>
-          <TouchableOpacity style={styles.btnVaga}>
+          <TouchableOpacity style={styles.btnVaga} onPress={() => {
+              setModalCandidato(true)
+
+              getItem('token')
+              .then(res => {
+
+
+                const formData = new FormData();
+                formData.append('token', res);
+                formData.append('tituloVaga', nomeVaga)
+    
+                axios.post(`${API_URL}/post/aplicar-vaga`, formData, {
+                  headers: {
+                    'Content-Type': 'multipart/form-data'
+                  }
+                })
+              })
+              
+            }}>
             <Text style={styles.textBtnVaga}>Aplicar</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
+
+      <Modal
+        visible={modalCandidato}
+        transparent={true}
+        
+      >
+        <View
+          style={styles.modal}
+        >
+
+          <View style={styles.modalContent}>
+
+            <Text style={styles.text}>Você se candidatou para essa vaga!</Text>
+            <Text style={styles.text}></Text>
+
+            <Text style={styles.textJust}>Agora é só esperar!</Text>
+            <Text style={styles.textJust}></Text>
+
+            <Text style={styles.textJust}>Em caso de dúvidas, você poderá enviar mensagem para a empresa.</Text>
+            <Text style={styles.textJust}></Text>
+            
+
+            <View style={[styles.botoes, {width: '100%'}]}>
+              <Pressable style={[styles.button4, { flex: 1 }]} onPress={() => { 
+                  setModalCandidato(false);
+                  navigation.goBack();
+                }} >
+                <Text style={styles.buttonSmallText2}>Finalizar</Text>
+              </Pressable>
+            </View>
+          </View>
+
+        </View>
+
+      </Modal>
     </SafeAreaView>
   );
 }

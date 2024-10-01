@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -7,6 +7,7 @@ import {
   Pressable,
   TouchableOpacity,
   ScrollView,
+  Modal,
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import styles from "../styles/Vagas";
@@ -19,9 +20,13 @@ import {
   useFonts,
 } from "@expo-google-fonts/poppins";
 import LoadingModal from "../components/LoadingModal";
+import axios from "axios";
+import { API_URL } from "../constraints";
 
 function Vagas() {
+  
   const navigation = useNavigation();
+  const [empregos, setEmpregos] = useState([])
 
   let [fontsLoaded] = useFonts({
     Poppins_400Regular,
@@ -31,6 +36,21 @@ function Vagas() {
   if (!fontsLoaded) {
     return <LoadingModal />;
   }
+
+
+  axios.get(`${API_URL}/post/all/emprego`)
+  .then(res => {
+    const empregoCompletoImagem = res.data.map(emprego => ({
+      ...emprego,
+      imagemPostagem: `${API_URL}${emprego.imagemPostagem}`,
+      fotoPerfil: `${API_URL}${emprego.fotoPerfil}`
+    }));
+    setEmpregos(empregoCompletoImagem);
+  })
+  .catch(err => {
+    console.error("Erro ao buscar dados: ", err);
+  });
+  
 
   return (
     <SafeAreaView style={styles.container}>
@@ -50,40 +70,36 @@ function Vagas() {
           <Text style={styles.title}>Vagas</Text>
 
           <View style={styles.vagasContainer}>
-            <View style={styles.cardCultura}>
-              <View style={styles.imgVagaContainer}>
-                <Image
-                  style={styles.imgVaga}
-                  source={require("../../assets/images/destaque-carpintaria.png")}
-                />
+
+            {empregos.map((emprego, i) => (
+              <View key={i} style={styles.cardCultura}>
+                <View style={styles.imgVagaContainer}>
+                  <Image
+                    style={styles.imgVaga}
+                    source={{ uri: emprego.imagemPostagem }}
+                  />
+                </View>
+                <View style={styles.infosVaga}>
+                  <Text style={styles.textVaga}>{emprego.tituloPostagem}</Text>
+                  <TouchableOpacity
+                    style={styles.btnVaga}
+                    onPress={() => navigation.navigate("Vaga", {
+                      vagaId: emprego.idPostagem,
+                      nomeVaga: emprego.tituloPostagem,
+                      textoVaga: emprego.conteudoPostagem,
+                      imagemVaga: emprego.imagemPostagem
+                    })}
+                  >
+                    <Text style={styles.textBtnVaga}>Ver mais</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
-              <View style={styles.infosVaga}>
-                <Text style={styles.textVaga}>Vaga de carpinteiro</Text>
-                <TouchableOpacity
-                  style={styles.btnVaga}
-                  onPress={() => navigation.navigate("Vaga")}
-                >
-                  <Text style={styles.textBtnVaga}>Candidatar-se</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-            <View style={styles.cardCultura}>
-              <View style={styles.imgVagaContainer}>
-                <Image
-                  style={styles.imgVaga}
-                  source={require("../../assets/images/destaque-balconista.png")}
-                />
-              </View>
-              <View style={styles.infosVaga}>
-                <Text style={styles.textVaga}>Vaga de balconista</Text>
-                <TouchableOpacity style={styles.btnVaga}>
-                  <Text style={styles.textBtnVaga}>Candidatar-se</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
+            ))}
           </View>
         </View>
       </ScrollView>
+
+     
     </SafeAreaView>
   );
 }

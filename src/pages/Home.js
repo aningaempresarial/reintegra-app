@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from '../styles/Home';
 import { View, Text, ScrollView, SafeAreaView, TextInput, TouchableOpacity, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -7,34 +7,29 @@ import { Navbar } from '../components/Navbar';
 import PagerView from 'react-native-pager-view';
 import { formatarTempoDecorrido } from '../functions/formatarTempo';
 import { useNavigation } from '@react-navigation/native';
+import axios from 'axios';
+import { API_URL } from '../constraints';
 
 const Home = () => {
   const navigation = useNavigation();
 
   const [currentPage, setCurrentPage] = useState(1);
 
-  const [destaques, setDestaques] = useState([
-    {
-      nome: 'Curso de Carpintaria',
-      imagem: require('../../assets/images/destaque-carpintaria.png'),
-      data: new Date('2024-08-20T14:48:00.000Z'),
-    },
-    {
-      nome: 'Vaga de Balconista',
-      imagem: require('../../assets/images/destaque-balconista.png'),
-      data: new Date('2024-08-22T09:00:00.000Z'),
-    },
-    {
-      nome: 'Curso de Gestão',
-      imagem: require('../../assets/images/destaque-gestao.png'),
-      data: new Date('2024-08-23T12:30:00.000Z'),
-    },
-    {
-      nome: 'Palestra Profissionais do Futuro',
-      imagem: require('../../assets/images/destaque-palestra.png'),
-      data: new Date('2024-08-24T15:45:00.000Z'),
-    }
-  ]);
+  const [destaques, setDestaques] = useState([]);
+
+  useEffect(() => {
+    axios.get(`${API_URL}/post/destaques`)
+      .then(res => {
+        const destaquesComImagemCompleta = res.data.map(destaque => ({
+          ...destaque,
+          imagem: `${API_URL}${destaque.imagem}`,
+        }));
+        setDestaques(destaquesComImagemCompleta);
+      })
+      .catch(error => {
+        console.error("Erro ao buscar destaques:", error);
+      });
+  }, []);
   
   return (
     <SafeAreaView style={styles.container}>
@@ -170,7 +165,8 @@ const Home = () => {
               <TouchableOpacity style={styles.oportunidadeCard} key={i}>
                 <Image
                   style={styles.imagemOportunidade}
-                  source={destaque.imagem}
+                  source={{ uri: destaque.imagem }}
+
                 />
                 <Text style={styles.tituloOportunidade}>{destaque.nome}</Text>
                 <Text style={styles.textoTempoOportunidade}>{formatarTempoDecorrido(destaque.data)}</Text>

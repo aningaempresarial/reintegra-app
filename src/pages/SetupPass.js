@@ -103,6 +103,7 @@ function SetupPass({ route }) {
                     setModalSucesso(true);
                   })
                   .catch(err => {
+                    console.log(err)
                     setLoading(false)
                     setModalErro(true);
                   })

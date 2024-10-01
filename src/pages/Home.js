@@ -81,7 +81,7 @@ const Home = () => {
               <View style={[styles.card, { backgroundColor: '#ff914d' }]}>
                 <View style={styles.topCard}>
                   <Text style={styles.textCard}>Novas vagas publicadas!</Text>
-                  <TouchableOpacity style={styles.buttonCard}>
+                  <TouchableOpacity style={styles.buttonCard} onPress={() => navigation.navigate('Vagas')}>
                     <Text style={styles.textButtonCard}>Ver Mais</Text>
                   </TouchableOpacity>
                 </View>

@@ -1,11 +1,11 @@
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
-import { Image, Modal, Pressable, StyleSheet, View } from "react-native";
+import { Image, Modal, Pressable, StyleSheet, View, Text } from "react-native";
 import Icon from 'react-native-vector-icons/Ionicons';
 import { clear } from "../functions/AsyncStorage";
 
 export function Navbar() {
-    const navgation = useNavigation();
+    const navigation = useNavigation();
 
     const [modal, setModal] = useState(false);
 
@@ -23,7 +23,7 @@ export function Navbar() {
                 <Icon name='menu' size={50} />
             </Pressable>
 
-            <Pressable style={styles.logoContainer} onPress={() => navgation.replace('Home')}>
+            <Pressable style={styles.logoContainer} onPress={() => navigation.replace('Home')}>
                 <Image style={styles.logo} source={require('../../assets/images/logo_full_quality.png')} />
             </Pressable>
 
@@ -41,14 +41,31 @@ export function Navbar() {
                             <Icon name='close' size={50} />
                         </Pressable>
 
+                        <Pressable style={styles.itemMenu} onPress={() => navigation.navigate('Home')}>
+                            <Icon name='home-outline' size={40} />
+                            <Text style={styles.item}>Home</Text>
+                        </Pressable>
+                        <Pressable style={styles.itemMenu} onPress={() => navigation.navigate('Chats')}>
+                            <Icon name='chatbubble-outline' size={40} />
+                            <Text style={styles.item}>Mensagens</Text>
+                        </Pressable>
+                        <Pressable style={styles.itemMenu} onPress={() => navigation.navigate('Vagas')}>
+                            <Icon name='briefcase-outline' size={40} />
+                            <Text style={styles.item}>Vagas</Text>
+                        </Pressable>
+                        <Pressable style={styles.itemMenu}>
+                            <Icon name='cog-outline' size={40} />
+                            <Text style={styles.item}>Configurações</Text>
+                        </Pressable>
+
                         <Pressable style={styles.exitButton} onPress={() => {
                             closeModal()
 
                             clear()
 
-                            navgation.navigate('Start')
+                            navigation.navigate('Start')
                         }}>
-                            <Icon name='exit-outline' size={35} />
+                            <Icon name='exit-outline' size={40} />
                         </Pressable>
 
                     </View>
@@ -107,11 +124,20 @@ const styles = StyleSheet.create({
         padding: 10,
     },
     closeButton: {
-
+        marginBottom: 10
     },
     exitButton: {
         position: 'absolute',
         bottom: 10,
         left: 10,
+    },
+    itemMenu: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        padding: 5
+    },
+    item: {
+        fontSize: 25,
+        padding: 10
     }
 });

@@ -21,7 +21,6 @@ import {
 import LoadingModal from "../components/LoadingModal";
 
 function Vagas() {
-
   const navigation = useNavigation();
 
   let [fontsLoaded] = useFonts({
@@ -30,7 +29,7 @@ function Vagas() {
   });
 
   if (!fontsLoaded) {
-    return <LoadingModal/>;
+    return <LoadingModal />;
   }
 
   return (
@@ -60,7 +59,10 @@ function Vagas() {
               </View>
               <View style={styles.infosVaga}>
                 <Text style={styles.textVaga}>Vaga de carpinteiro</Text>
-                <TouchableOpacity style={styles.btnVaga} onPress={() => navigation.navigate('Vaga')}>
+                <TouchableOpacity
+                  style={styles.btnVaga}
+                  onPress={() => navigation.navigate("Vaga")}
+                >
                   <Text style={styles.textBtnVaga}>Candidatar-se</Text>
                 </TouchableOpacity>
               </View>

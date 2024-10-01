@@ -11,6 +11,7 @@ import Home from '../pages/Home';
 import Vagas from '../pages/Vagas';
 import Vaga from '../pages/Vaga';
 import Culturas from '../pages/Culturas';
+import Chats from '../pages/Chats';
 import Chat from '../pages/Chat';
 
 const Stack = createNativeStackNavigator();
@@ -34,6 +35,8 @@ function Navigation() {
       <Stack.Screen name="Vaga" component={Vaga} options={{ headerShown: false }}/>
 
       <Stack.Screen name="Culturas" component={Culturas} options={{ headerShown: false }}/>
+
+      <Stack.Screen name="Chats" component={Chats} options={{ headerShown: false }}/>
 
       <Stack.Screen name="Chat" component={Chat} options={{ headerShown: false }}/>
 

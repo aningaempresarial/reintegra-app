@@ -27,7 +27,7 @@ const Home = () => {
         setDestaques(destaquesComImagemCompleta);
       })
       .catch(error => {
-        console.error("Erro ao buscar destaques:", error);
+        console.error("Erro ao buscar:", error);
       });
   }, []);
   

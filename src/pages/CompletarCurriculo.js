@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import styles from '../styles/CompletarCurriculo';
 import Input from "../components/TextInput";
-import SelectInput from "../components/SelectInput";
-import { View, Text, StyleSheet, Image, ScrollView, SafeAreaView, Pressable, Modal } from 'react-native';
+// import SelectInput from "../components/SelectInput";
+import { View, Text, StyleSheet, Image, SelectInput, ScrollView, SafeAreaView, Pressable, Modal } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Navbar } from '../components/Navbar';
 import { useNavigation } from '@react-navigation/native';

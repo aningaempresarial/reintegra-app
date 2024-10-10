@@ -52,7 +52,7 @@ const CompletarCurriculo = () => {
                             <Input
                                 label={'Estado'}
                                 placeholder={'SP'}
-                                style={{ width: '30%' }}
+                                style={{ width: '20%' }}
                             />
                         </View>
                             {/* <SelectInput

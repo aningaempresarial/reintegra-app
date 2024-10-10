@@ -30,32 +30,20 @@ const CompletarCurriculo = () => {
         
                     <View style={styles.inputContainer}>
                         <Input
-                            label={'Nome Completo'}
+                            label={'Telefone'}
+                            placeholder={'11 2666-3621'}
                             style={{ width: '90%' }}
                             
                         />
 
-                        {/* <Input
-                            label={'E-mail'}
-                            style={{ width: '90%' }}
-                            
-                        />
-                    
                         <Input
-                            label={'Nome da Mãe'}
+                            label={'CEP'}
                             style={{ width: '90%' }}
                             
                         />
-
-                        <SelectInput
-                            label="Sexo"
-                            
-                            
-                        />
                         
-                    
                         
-                        <View style={[styles.botoes, {marginTop: 20}]}>
+                        {/* <View style={[styles.botoes, {marginTop: 20}]}>
                             <Pressable style={styles.button2} onPress={() => { navigation.replace('Start') }}>
                                 <Text style={styles.buttonText2}>Cancelar</Text>
                             </Pressable>
@@ -63,7 +51,7 @@ const CompletarCurriculo = () => {
                             <Pressable style={styles.button1} onPress={() => { navigation.replace('Start') }}>
                                 <Text style={styles.buttonText}>Continuar</Text>
                             </Pressable>
-                        </View> */}
+                        </View> */} 
                 
                     </View>
                 

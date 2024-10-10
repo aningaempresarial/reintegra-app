@@ -26,50 +26,7 @@ const CompletarCurriculo = () => {
                 <View style={styles.main}>
         
         
-                    <View style={[styles.card, { backgroundColor: '#ef4232' }]}>
-                        <Text style={styles.textCard}>Dados Pessoais</Text>
-                        <Pressable style={{ flex: 0.5 }}>
-                            <Icon name='person' color='#fff' size={80} />
-                        </Pressable>
-                    </View>
-        
-                    <View style={[styles.cardContainer]}>
-        
-        
-                        <View style={[{ flex: 1 }]}>
-        
-                            <Pressable style={[styles.cardN, { backgroundColor: '#112257' }]}>
-                                <Icon name='home' color='#fff' size={80} />
-                                <Text style={[styles.textCard, {fontSize: 15, flexBasis: '100%', paddingVertical: 10}]}>Dados Residênciais</Text>
-                            </Pressable>
-        
-        
-                            <Pressable style={[styles.cardN, { backgroundColor: '#297996', flex: 1, paddingTop: 30 }]}>
-                                <Icon name='briefcase' color='#fff' size={80} />
-                                <Text style={[styles.textCard, {fontSize: 15, flexBasis: '100%'}]}>Experiência Profissional</Text>
-                            </Pressable>
-        
-                        </View>
-        
-                        <View style={[{ width: 10 }]}></View>
-        
-                        <View style={[{ flex: 1 }]}>
-        
-                            <Pressable style={[styles.cardN, { backgroundColor: '#1e8674', paddingVertical: 30 }]}>
-                                <Icon name='school-sharp' color='#fff' size={80} />
-                                <Text style={[styles.textCard, {fontSize: 15, flexBasis: '100%'}]}>Formação Acadêmica</Text>
-                            </Pressable>
-        
-        
-                            <Pressable style={[styles.cardN, { backgroundColor: '#f5f8ff', borderStyle: 'dashed', borderWidth: 2, paddingVertical: 20 }]}>
-                                <Icon name='add-circle' color='#ef4232' size={80} />
-                                <Text style={[styles.textCard, {fontSize: 15, flexBasis: '100%', color: '#000'}]}>Adicionar Outras Informações</Text>
-                            </Pressable>
-        
-        
-                        </View>
-        
-                    </View>
+                    
         
         
                 </View>

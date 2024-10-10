@@ -46,21 +46,20 @@ const CompletarCurriculo = () => {
                             <Input
                                 label={'Cidade'}
                                 placeholder={'São Paulo'}
-                                style={{ width: '50%' }}
-                                
+                                style={{ width: '50%', marginRight: 10 }}  // Adiciona um espaço entre os campos
                             />
 
                             <Input
                                 label={'Estado'}
                                 placeholder={'SP'}
                                 style={{ width: '30%' }}
-                                
                             />
+                        </View>
                             {/* <SelectInput
                                 label="Grau escolaridade"
                                 placeholder={'Selecione seu grau de escolaridade...'}
                             /> */}
-                        </View>
+                        
                         
                         
                         {/* <View style={[styles.botoes, {marginTop: 20}]}>

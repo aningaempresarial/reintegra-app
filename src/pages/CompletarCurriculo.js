@@ -46,7 +46,7 @@ const CompletarCurriculo = () => {
                             <Input
                                 label={'Cidade'}
                                 placeholder={'São Paulo'}
-                                style={{ width: '50%', marginRight: 10 }}  // Adiciona um espaço entre os campos
+                                style={{ width: '50%', marginRight: 20 }}  // Adiciona um espaço entre os campos
                             />
 
                             <Input

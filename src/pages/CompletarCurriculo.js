@@ -42,20 +42,22 @@ const CompletarCurriculo = () => {
                             style={{ width: '90%' }}
                             
                         />
-                        
-                        <Input
-                            label={'Cidade'}
-                            placeholder={'São Paulo'}
-                            style={{ width: '50%' }}
-                            
-                        />
+                        <View style={styles.inputContainer}>
+                            <Input
+                                label={'Cidade'}
+                                placeholder={'São Paulo'}
+                                style={{ width: '60%' }}
+                                
+                            />
 
-                        <Input
-                            label={'Estado'}
-                            placeholder={'SP'}
-                            style={{ width: '40%' }}
-                            
-                        />
+                            <Input
+                                label={'Estado'}
+                                placeholder={'SP'}
+                                style={{ width: '30%' }}
+                                
+                            />
+                        </View>
+                        
                         
                         {/* <View style={[styles.botoes, {marginTop: 20}]}>
                             <Pressable style={styles.button2} onPress={() => { navigation.replace('Start') }}>

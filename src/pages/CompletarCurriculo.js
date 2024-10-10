@@ -28,42 +28,42 @@ const CompletarCurriculo = () => {
                 <View style={styles.main}>
         
         
-                <View style={styles.inputContainer}>
-                    <Input
-                        label={'Nome Completo'}
-                        style={{ width: '90%' }}
-                        
-                    />
+                    <View style={styles.inputContainer}>
+                        <Input
+                            label={'Nome Completo'}
+                            style={{ width: '90%' }}
+                            
+                        />
 
-
-                    <Input
-                        label={'E-mail'}
-                        style={{ width: '90%' }}
-                        
-                    />
+                        {/* <Input
+                            label={'E-mail'}
+                            style={{ width: '90%' }}
+                            
+                        />
                     
-                
-                    <Input
-                        label={'Nome da Mãe'}
-                        style={{ width: '90%' }}
-                        
-                    />
-                    <SelectInput
+                        <Input
+                            label={'Nome da Mãe'}
+                            style={{ width: '90%' }}
+                            
+                        />
+
+                        <SelectInput
                             label="Sexo"
                             
                             
                         />
+                        
                     
-                
-                    
-                    <View style={[styles.botoes, {marginTop: 20}]}>
-                        <Pressable style={styles.button2} onPress={() => { navigation.replace('Start') }}>
-                        <Text style={styles.buttonText2}>Cancelar</Text>
-                        </Pressable>
-                        <Pressable style={styles.button1} onPress={() => { navigation.replace('Start') }}>
-                        <Text style={styles.buttonText}>Continuar</Text>
-                        </Pressable>
-                    </View>
+                        
+                        <View style={[styles.botoes, {marginTop: 20}]}>
+                            <Pressable style={styles.button2} onPress={() => { navigation.replace('Start') }}>
+                                <Text style={styles.buttonText2}>Cancelar</Text>
+                            </Pressable>
+                            
+                            <Pressable style={styles.button1} onPress={() => { navigation.replace('Start') }}>
+                                <Text style={styles.buttonText}>Continuar</Text>
+                            </Pressable>
+                        </View> */}
                 
                     </View>
                 

@@ -43,6 +43,34 @@ export default StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center'
     },
+    
+    button1: {
+      backgroundColor: '#ef4232',
+      padding: 20,
+      paddingHorizontal: 20,
+      flex: 1,
+      borderRadius: 20,
+      margin: 10
+    },
+    button2: {
+      borderColor: '#112257',
+      borderWidth: 1,
+      padding: 20,
+      paddingHorizontal: 20,
+      flex: 1,
+      borderRadius: 20,
+      margin: 10
+    },
+    botoes: {
+      flexDirection: 'row',
+      width: '95%'
+    },
+    inputContainer: {
+      justifyContent: 'center',
+      alignItems: 'center',
+      width: '100%',
+      marginVertical: 15
+    },
     cardN: {
       height: 'auto',
       width: '100%',

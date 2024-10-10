@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import styles from '../styles/CompletarCurriculo';
+import Input from "../components/TextInput";
+import SelectInput from "../components/SelectInput";
 import { View, Text, StyleSheet, Image, ScrollView, SafeAreaView, Pressable, Modal } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Navbar } from '../components/Navbar';
@@ -26,8 +28,45 @@ const CompletarCurriculo = () => {
                 <View style={styles.main}>
         
         
+                <View style={styles.inputContainer}>
+                    <Input
+                        label={'Nome Completo'}
+                        style={{ width: '90%' }}
+                        
+                    />
+
+
+                    <Input
+                        label={'E-mail'}
+                        style={{ width: '90%' }}
+                        
+                    />
                     
-        
+                
+                    <Input
+                        label={'Nome da Mãe'}
+                        style={{ width: '90%' }}
+                        
+                    />
+                    <SelectInput
+                            label="Sexo"
+                            selectedValue={values.sexo}
+                            
+                        />
+                    
+                
+                    
+                    <View style={[styles.botoes, {marginTop: 20}]}>
+                        <Pressable style={styles.button2} onPress={() => { navigation.replace('Start') }}>
+                        <Text style={styles.buttonText2}>Cancelar</Text>
+                        </Pressable>
+                        <Pressable style={styles.button1} onPress={handleSubmit}>
+                        <Text style={styles.buttonText}>Continuar</Text>
+                        </Pressable>
+                    </View>
+                
+                    </View>
+                
         
                 </View>
             </ScrollView>

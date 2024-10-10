@@ -50,7 +50,7 @@ const CompletarCurriculo = () => {
                     />
                     <SelectInput
                             label="Sexo"
-                            selectedValue={values.sexo}
+                            
                             
                         />
                     

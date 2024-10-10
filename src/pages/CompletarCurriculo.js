@@ -46,13 +46,13 @@ const CompletarCurriculo = () => {
                             <Input
                                 label={'Cidade'}
                                 placeholder={'São Paulo'}
-                                style={{ width: '50%' }} 
+                                style={{ width: '55%' }} 
                             />
 
                             <Input
                                 label={'Estado'}
                                 placeholder={'SP'}
-                                style={{ width: '30%' }}
+                                style={{ width: '25%' }}
                             />
                         </View>
                         

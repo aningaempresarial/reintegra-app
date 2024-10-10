@@ -60,7 +60,7 @@ const CompletarCurriculo = () => {
                         <Pressable style={styles.button2} onPress={() => { navigation.replace('Start') }}>
                         <Text style={styles.buttonText2}>Cancelar</Text>
                         </Pressable>
-                        <Pressable style={styles.button1} onPress={handleSubmit}>
+                        <Pressable style={styles.button1} onPress={() => { navigation.replace('Start') }}>
                         <Text style={styles.buttonText}>Continuar</Text>
                         </Pressable>
                     </View>

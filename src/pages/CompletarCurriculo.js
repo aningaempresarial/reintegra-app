@@ -55,10 +55,11 @@ const CompletarCurriculo = () => {
                                 style={{ width: '30%' }}
                             />
                         </View>
-                            {/* <SelectInput
-                                label="Grau escolaridade"
-                                placeholder={'Selecione seu grau de escolaridade...'}
-                            /> */}
+                        
+                        {/* <SelectInput
+                            label="Grau escolaridade"
+                            placeholder={'Selecione seu grau de escolaridade...'}
+                        /> */}
                         
                         
                         

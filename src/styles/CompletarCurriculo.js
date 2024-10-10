@@ -12,7 +12,7 @@ export default StyleSheet.create({
       paddingTop: 20
     },
     title: {
-      fontSize: 30,
+      fontSize: 25,
       fontWeight: 'bold',
       letterSpacing: 2,
       color: '#112257',

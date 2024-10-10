@@ -19,7 +19,7 @@ const CompletarCurriculo = () => {
                 <View style={styles.header}>
         
                     <Text style={styles.title}>Completar Currículo</Text>
-                    <Text style={styles.subtitle}>Selecione uma opção:</Text>
+                    <Text style={styles.subtitle}>Preencha os campos abaixo:</Text>
         
                 </View>
         

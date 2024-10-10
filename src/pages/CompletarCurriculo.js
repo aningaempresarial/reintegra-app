@@ -38,10 +38,24 @@ const CompletarCurriculo = () => {
 
                         <Input
                             label={'CEP'}
+                            placeholder={'14015-048'}
                             style={{ width: '90%' }}
                             
                         />
                         
+                        <Input
+                            label={'Cidade'}
+                            placeholder={'São Paulo'}
+                            style={{ width: '50%' }}
+                            
+                        />
+
+                        <Input
+                            label={'Estado'}
+                            placeholder={'SP'}
+                            style={{ width: '40%' }}
+                            
+                        />
                         
                         {/* <View style={[styles.botoes, {marginTop: 20}]}>
                             <Pressable style={styles.button2} onPress={() => { navigation.replace('Start') }}>

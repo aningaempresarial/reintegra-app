@@ -71,6 +71,9 @@ export default StyleSheet.create({
       width: '100%',
       marginVertical: 15
     },
+    inputCidadeEstado: {
+      flexDirection: 'row',
+    },
     cardN: {
       height: 'auto',
       width: '100%',

@@ -42,7 +42,7 @@ const CompletarCurriculo = () => {
                             style={{ width: '90%' }}
                             
                         />
-                        <View style={styles.inputContainer}>
+                        <View style={styles.inputCidadeEstado}>
                             <Input
                                 label={'Cidade'}
                                 placeholder={'São Paulo'}

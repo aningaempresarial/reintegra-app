@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
 import styles from '../styles/CompletarCurriculo';
 import Input from "../components/TextInput";
-import SelectInput from "../components/SelectInput";
 import { View, Text, StyleSheet, Image,ScrollView, SafeAreaView, Pressable, Modal } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Navbar } from '../components/Navbar';
 import { useNavigation } from '@react-navigation/native';
 
-const CompletarCurriculo = () => {
+const CompletarCurriculoParteDois = () => {
     const [modalInfo, setModalInfo] = useState(true);
-    const [selectedGrauEscolaridade, setSelectedGrauEscolaridade] = useState('');
     const navigation = useNavigation();
 
     return (
@@ -22,7 +20,6 @@ const CompletarCurriculo = () => {
                 <View style={styles.header}>
         
                     <Text style={styles.title}>Completar Currículo</Text>
-                    <Text style={styles.subtitle}>Preencha os campos abaixo:</Text>
         
                 </View>
         
@@ -31,76 +28,56 @@ const CompletarCurriculo = () => {
         
                     <View style={styles.inputContainer}>
                         <Input
-                            label={'Telefone'}
-                            placeholder={'11 2666-3621'}
+                            label={'Cargo: '}
+                            placeholder={'Mecânico '}
                             style={{ width: '90%' }}
                             
                         />
 
                         <Input
-                            label={'CEP'}
-                            placeholder={'14015-048'}
+                            label={'Nome Empresa:'}
+                            placeholder={'Mecânica Raiz'}
                             style={{ width: '90%' }}
                             
                         />
-                        <View style={styles.inputCidadeEstado}>
-                            <Input
-                                label={'Cidade'}
-                                placeholder={'São Paulo'}
-                                style={{ width: '55%' }} 
-                            />
-
-                            <Input
-                                label={'Estado'}
-                                placeholder={'SP'}
-                                style={{ width: '25%' }}
-                            />
-                        </View>
                         
-                       <SelectInput
-                            label="Grau escolaridade"
-                            placeholder={'Selecione seu grau de escolaridade...'}
-                            selectedValue={selectedGrauEscolaridade}   // O valor selecionado atual
-                            onValueChange={(value) => setSelectedGrauEscolaridade(value)}  // Função para atualizar o valor
-                            options={[
-                                { label: 'Fundamental 1 incompleto ( 1° ao 5° ano)', value: 'Fund 1 (1 á 5' },
-                                { label: 'Fundamental 1 completo ( 1° ao 5° ano)', value: 'Fund 1 (1 á 5' },
-                                { label: 'Fundamental 2 incompleto ( 6° ao 9° ano)', value: 'Fund 1 (6 á 9' },
-                                { label: 'Fundamental 2 incompleto ( 6° ao 9° ano)', value: 'Fund 1 (6 á 9' },
-                                { label: 'Ensino médio incompleto', value: 'Ensino médio incompleto' },
-                                { label: 'Ensino médio completo', value: 'Ensino médio completo' },
-                                { label: 'Ensino superior incompleto', value: 'Ensino superior incompleto' },
-                                { label: 'Ensino superior completo', value: 'Ensino superior completo' },
+                        <Input
+                            label={'Periodo:'}
+                            placeholder={'02/2010 a 06/2022'}
+                            style={{ width: '90%' }}
+                            
+                        />
 
-                            ]}
-                        /> 
-
-                        
-
-                       <Pressable style={styles.adicionarInformacoes} onPress={() => { }}>
+                        <Pressable style={styles.adicionarInformacoes} onPress={() => { }}>
                             <Icon name='add-circle' color='#112257' size={40} />
-                            <Text style={[styles.textInformacoes, {fontSize: 12, color: '#000'}]}>Adicionar Informações Adicionais</Text>
-                        </Pressable> 
-                               
-                        <View style={[styles.botoes, {marginTop: 10}]}>
-                            <Pressable style={styles.button1} onPress={() => { navigation.replace('CompletarCurriculoParteDois') }}>
-                                <Text style={styles.buttonText}>Continuar</Text>
+                            <Text style={[styles.textInformacoes, {fontSize: 12, color: '#000'}]}>Adicionar Outra Experiência</Text>
+                        </Pressable>
+                        
+                        {/* experiencias já cadastradas */}
+                        <View style={[styles.experiencias, {marginTop: 20}]}>
+                            <View style={[styles.experiencia1]}>
+                                <Text style={styles.experienciasText}>Experiência 1</Text>
+                            </View>
+                        </View> 
+
+                        <View style={[styles.botoes, {marginTop: 20}]}>
+                            <Pressable style={styles.button1} onPress={() => { navigation.replace('CompletarCurriculo') }}>
+                                <Text style={styles.buttonText}>Finalizar</Text>
                             </Pressable>
                         </View>  
-
+                        
                         <Pressable style={styles.precisaDeAjuda} onPress={() => { }}>
                             
                             <Text style={[styles.ajudaText, {fontSize: 8, color: '#000'}]}>Precisa de ajuda?</Text>
                             <Icon name='help-circle' color='#112257' size={25} />
                         </Pressable> 
-                
                     </View>
                 
         
                 </View>
             </ScrollView>
 
-            <Modal
+            {/* <Modal
                 visible={modalInfo}
                 transparent={true}
                 
@@ -141,11 +118,11 @@ const CompletarCurriculo = () => {
 
                 </View>
 
-            </Modal>
+            </Modal> */}
 
         </SafeAreaView>
     );
 };
 
 
-export default CompletarCurriculo;
+export default CompletarCurriculoParteDois;

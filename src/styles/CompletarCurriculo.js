@@ -9,7 +9,7 @@ export default StyleSheet.create({
     header: {
       flex: 1,
       width: '100%',
-      paddingTop: 20
+      paddingTop:15
     },
     title: {
       fontSize: 25,
@@ -20,7 +20,7 @@ export default StyleSheet.create({
       width: '60%',
     },
     subtitle: {
-      fontSize: 20,
+      fontSize: 18,
       fontWeight: '400',
       letterSpacing: 2,
       color: '#112257',
@@ -31,26 +31,32 @@ export default StyleSheet.create({
       flex: 5,
       flexDirection: 'column',
       width: '95%',
-      marginTop: 10
-    },
-    card: {
-      justifyContent: 'center',
-      flex: 1,
-      width: '100%',
-      padding: 20,
-      marginBottom: 10,
-      flexDirection: 'row',
-      justifyContent: 'center',
-      alignItems: 'center'
+      marginTop: 2
     },
     
+    button: {
+      backgroundColor: '#112257',
+      paddingHorizontal: 5,
+      borderColor: '#fff',
+      borderRadius: 10
+    },
+
+    buttonText: {
+      color: '#fff',
+      fontSize: 16,
+      textTransform: 'uppercase',
+      letterSpacing: 1,
+      fontWeight: '600',
+      width: '100%',
+      textAlign: 'center'
+    },
     button1: {
       backgroundColor: '#ef4232',
       padding: 20,
       paddingHorizontal: 20,
       flex: 1,
       borderRadius: 20,
-      margin: 10
+      margin: 2
     },
     button2: {
       borderColor: '#112257',
@@ -59,11 +65,40 @@ export default StyleSheet.create({
       paddingHorizontal: 20,
       flex: 1,
       borderRadius: 20,
-      margin: 10
+      margin: 5
+    },
+    experiencias:{
+      width: '95%',
+      justifyContent: 'space-between',
+    },
+    experienciasText:{
+      color: '#000',
+      fontSize: 15,
+      fontWeight: '400',
+      width: '100%',
+    },
+    experiencia1:{
+      backgroundColor: '#d5d0d0',
+      padding: 20,
+      paddingHorizontal: 20,
+      flex: 1,
+      borderRadius: 15,
+      margin: 2
+    },
+    precisaDeAjuda:{
+      flexDirection: 'row',
+      alignItems: 'center',        
+      margin: 25
+    },
+    ajudaText:{
+      fontSize: 30,
+      fontWeight: 'bold',
+      textTransform: 'uppercase',
+      textAlign: 'center',
+      textDecorationLine: 'underline',
     },
     botoes: {
       flexDirection: 'row',
-      width: '95%'
     },
     inputContainer: {
       justifyContent: 'center',
@@ -73,35 +108,25 @@ export default StyleSheet.create({
     },
     inputCidadeEstado: {
       flexDirection: 'row',
-      alignItems: 'center',
+      justifyContent: 'space-between', 
+      alignItems: 'center',        
+      marginTop: 10
     },
-    cardN: {
-      height: 'auto',
-      width: '100%',
-      padding: 10,
-      justifyContent: 'center',
-      marginBottom: 10,
-      flexDirection: 'row',
-      justifyContent: 'center',
-      alignItems: 'center',
-      flexWrap: 'wrap'
-    },
-    cardContainer: {
-      display: 'flex',
-      flexDirection: 'row',
-      flexWrap: 'wrap',
-      flex: 3,
-    },
-    textCard: {
+    textInformacoes: {
       fontSize: 30,
       fontWeight: 'bold',
-      letterSpacing: 2,
       color: '#fff',
       textTransform: 'uppercase',
       textAlign: 'left',
       width: '100%',
       flex: 1,
       textAlign: 'center'
+    },
+    adicionarInformacoes:{
+      flexDirection: 'row',
+      justifyContent: 'space-between', 
+      alignItems: 'center',        
+      margin: 25
     },
     modal: {
       flex: 1,

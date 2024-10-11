@@ -7,6 +7,7 @@ import Splash from '../pages/Splash';
 import Choice from '../pages/Choice';
 import SetupPass from '../pages/SetupPass';
 import CompletarCurriculo from '../pages/CompletarCurriculo';
+import CompletarCurriculoParteDois from '../pages/CompletarCurriculoParteDois';
 import Home from '../pages/Home';
 import Vagas from '../pages/Vagas';
 import Vaga from '../pages/Vaga';
@@ -27,6 +28,7 @@ function Navigation() {
       <Stack.Screen name="SetupPass" component={SetupPass} options={{ headerShown: false }}/>
       
       <Stack.Screen name="CompletarCurriculo" component={CompletarCurriculo} options={{ headerShown: false }}/>
+      <Stack.Screen name="CompletarCurriculoParteDois" component={CompletarCurriculoParteDois} options={{ headerShown: false }}/>
       
       <Stack.Screen name="Home" component={Home} options={{ headerShown: false }}/>
 

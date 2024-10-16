@@ -14,6 +14,16 @@ import Vaga from '../pages/Vaga';
 import Culturas from '../pages/Culturas';
 import Chats from '../pages/Chats';
 import Chat from '../pages/Chat';
+import Configuracoes from '../pages/Configuracoes';
+import EditarPerfil from '../pages/configs/EditarPerfil';
+import Notificacoes from '../pages/configs/Notificacoes';
+import Acessibilidade from '../pages/configs/Acessibilidade';
+import SegurancaPermissoes from '../pages/configs/SegurancaPermissoes';
+import CompartilharPerfil from '../pages/configs/CompartilharPerfil';
+import Sobre from '../pages/configs/Sobre';
+import AjudaSuporte from '../pages/configs/AjudaSuporte';
+import RelatarProblema from '../pages/configs/RelatarProblema';
+import TermosPoliticas from '../pages/configs/TermosPoliticas';
 
 const Stack = createNativeStackNavigator();
 
@@ -30,6 +40,17 @@ function Navigation() {
       <Stack.Screen name="CompletarCurriculo" component={CompletarCurriculo} options={{ headerShown: false }}/>
       <Stack.Screen name="CompletarCurriculoParteDois" component={CompletarCurriculoParteDois} options={{ headerShown: false }}/>
       
+      <Stack.Screen name="Configuracoes" component={Configuracoes} options={{ headerShown: false }}/>
+      <Stack.Screen name="EditarPerfil" component={EditarPerfil} options={{ headerShown: false }}/>
+      <Stack.Screen name="Notificacoes" component={Notificacoes} options={{ headerShown: false }}/>
+      <Stack.Screen name="Acessibilidade" component={Acessibilidade} options={{ headerShown: false }}/>
+      <Stack.Screen name="SegurancaPermissoes" component={SegurancaPermissoes} options={{ headerShown: false }}/>
+      <Stack.Screen name="CompartilharPerfil" component={CompartilharPerfil} options={{ headerShown: false }}/>
+      <Stack.Screen name="Sobre" component={Sobre} options={{ headerShown: false }}/>
+      <Stack.Screen name="AjudaSuporte" component={AjudaSuporte} options={{ headerShown: false }}/>
+      <Stack.Screen name="RelatarProblema" component={RelatarProblema} options={{ headerShown: false }}/>
+      <Stack.Screen name="TermosPoliticas" component={TermosPoliticas} options={{ headerShown: false }}/>
+
       <Stack.Screen name="Home" component={Home} options={{ headerShown: false }}/>
 
       <Stack.Screen name="Vagas" component={Vagas} options={{ headerShown: false }}/>

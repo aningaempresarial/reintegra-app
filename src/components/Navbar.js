@@ -53,7 +53,7 @@ export function Navbar() {
                             <Icon name='briefcase-outline' size={40} />
                             <Text style={styles.item}>Vagas</Text>
                         </Pressable>
-                        <Pressable style={styles.itemMenu}>
+                        <Pressable style={styles.itemMenu} onPress={() => navigation.navigate('Configuracoes')}>
                             <Icon name='cog-outline' size={40} />
                             <Text style={styles.item}>Configurações</Text>
                         </Pressable>

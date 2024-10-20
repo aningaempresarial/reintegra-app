@@ -1,11 +1,11 @@
 import { StyleSheet, TextInput, View, Text } from "react-native"
 import Icon from "react-native-vector-icons/Ionicons";
 
-export default function Input({label, ...props}) {
+export default function Input({label, estilo, ...props}) {
     return <View>
       <Text style={styles.label}>{label}</Text>
 
-      <View style={[styles.inputContainer]}>
+      <View style={[styles.inputContainer, estilo]}>
         <TextInput 
             style={styles.txtInput}
             {...props}

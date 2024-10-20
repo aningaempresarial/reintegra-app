@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 export default StyleSheet.create({
     container: {
       flex: 1,
-      justifyContent: 'center',
+      justifyContent: 'flex-start',
       alignItems: 'center',
       backgroundColor: '#fff',
     },
@@ -16,33 +16,22 @@ export default StyleSheet.create({
       width: '100%',
       textAlign: 'justify'
     },
-    headerDiv: {
-      flex: 1,
-      width: '100%',
-      height: '100%',
-      alignItems: 'center',
-      justifyContent: 'space-evenly'
-    },
+ 
     headerText: {
       fontSize: 24,
-      width: 280,
-      textAlign: 'justify'
+      textAlign: 'justify',
+      width: '90%'
     },
-    button1: {
-      backgroundColor: '#ef4232',
+    button: {
+      backgroundColor: '#ff914d',
       padding: 20,
-      paddingHorizontal: 20,
-      width: 300,
-      borderRadius: 50,
-      margin: 20
-    },
-    button2: {
-      backgroundColor: '#112257',
-      padding: 20,
-      paddingHorizontal: 20,
-      width: 300,
-      borderRadius: 50,
-      margin: 20
+      width: '100%',
+      paddingHorizontal: 60,
+      borderRadius: 5,
+      borderStyle: 'solid',
+      borderColor: '#fc573b',
+      borderWidth: 2,
+      marginTop: 50
     },
     buttonText: {
       color: '#fff',
@@ -145,5 +134,60 @@ export default StyleSheet.create({
       fontWeight: '600',
       width: '100%',
       textAlign: 'center'
+    },
+    input: {
+      borderColor: '#112257',
+      borderWidth: 2,
+      borderStyle: 'solid',
+      fontSize: 20,
+      padding: 20,
+      letterSpacing: 1,
+      fontWeight: 'bold',
+      borderRadius: 5,
+    },
+    headerDiv: {
+      width: '90%',
+      height: 150,
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      flexDirection: 'row'
+    },
+    backButton: {
+      color: '#545454'
+    },
+    helpButton: {
+      color: '#1d3da0'
+    },
+    main: {
+      width: '90%',
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      paddingBottom: 150
+    },
+    textContainer: {
+      width: '90%',
+      justifyContent: 'center',
+      alignItems: 'center'
+    },
+    title: {
+      fontSize: 26,
+      fontWeight: 'bold',
+      letterSpacing: 2,
+      color: '#112257',
+      width: '100%',
+      textAlign: 'center'
+    },
+    textCenter: {
+      textAlign: 'center'
+    },
+    text: {
+      fontSize: 20,
+      width: '90%',
+    },
+    textJust: {
+      fontSize: 20,
+      width: '100%',
+      textAlign: 'justify'
     },
 })

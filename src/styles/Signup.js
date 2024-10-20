@@ -13,6 +13,7 @@ export default StyleSheet.create({
       position: 'absolute'
     },
     textContainer: {
+      maxWidth: '100%',
       width: '100%',
       justifyContent: 'center',
       alignItems: 'center'
@@ -61,19 +62,21 @@ export default StyleSheet.create({
       outlineColor: 'transparent'
     },
     button: {
-      backgroundColor: '#112257',
-      padding: 10,
-      paddingHorizontal: 20,
-      borderColor: '#fff',
-      borderRadius: 10
+      backgroundColor: '#414d86',
+      padding: 20,
+      width: '90%',
+      paddingHorizontal: 60,
+      borderRadius: 5,
+      borderStyle: 'solid',
+      borderColor: '#414d86',
+      borderWidth: 2,
     },
     buttonText: {
       color: '#fff',
-      fontSize: 16,
+      fontSize: 20,
       textTransform: 'uppercase',
       letterSpacing: 1,
-      fontWeight: '600',
-      width: '100%',
+      fontWeight: 'bold',
       textAlign: 'center'
     },
     buttonText2: {
@@ -155,11 +158,36 @@ export default StyleSheet.create({
     },
     botoes: {
       flexDirection: 'row',
-      width: '95%'
+      width: '90%',
     },
     errorText: {
       color: '#EE4B2B',
       fontSize: 16,
       width: '90%'
-    }
+    },
+    headerDiv: {
+      width: '90%',
+      height: 150,
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      flexDirection: 'row'
+    },
+    backButton: {
+      color: '#545454'
+    },
+    helpButton: {
+      color: '#1d3da0'
+    },
+    eye: {
+      position: 'absolute',
+      top: 55,
+      right: 20
+    },
+    main: {
+      width: '90%',
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      paddingBottom: 150
+    },
 })

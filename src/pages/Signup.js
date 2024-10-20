@@ -7,6 +7,7 @@ import {
   Pressable,
   Modal,
   ScrollView,
+  Image,
 } from "react-native";
 import { useState } from "react";
 import Icon from "react-native-vector-icons/Ionicons";
@@ -48,11 +49,9 @@ function Signup({ route }) {
   const { cpf } = route.params || {};
   const navigation = useNavigation();
   
-  const [modalInformativo, setModalInformativo] = useState(true);
   const [modalErro, setModalErro] = useState(false);
   const [modalSucesso, setModalSucesso] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [user, setUser] = useState({});
 
   const options = [
     { label: "Masculino", value: "MASCULINO" },
@@ -65,18 +64,42 @@ function Signup({ route }) {
     setShow(true);
   };
 
-
-
   return (
     <SafeAreaView style={styles.container}>
 
-      <View style={{ marginBottom: 30 }}></View>
+
+      <View style={styles.headerDiv}>
+        <Icon name="chevron-back-outline" size={60} style={styles.backButton} onPress={() => navigation.goBack()} />
+        <Image source={require('../../assets/icons/reintegra-fechadura.png')} style={{ height: 60, resizeMode: 'contain' }} />
+        <Icon name="help-circle-outline" size={60} style={styles.helpButton} />
+      </View>
 
       <ScrollView >
+        
         <View style={styles.textContainer}>
-          <Text style={styles.title}>Criar uma conta</Text>
+          <Text style={styles.title}>Validando Dados</Text>
           <Text style={[styles.text, styles.textCenter]}>Preencha com os seus dados</Text>
+
+          <View style={{
+            backgroundColor: '#5867b0',
+            width: 35,
+            height: 35,
+            borderRadius: 35,
+            justifyContent: 'center',
+            alignItems: 'center',
+            position: 'absolute',
+            left: 5,
+            top: 0
+          }}>
+            <Text style={{
+              color: 'white',
+              fontSize: 20,
+              fontWeight: 'bold',
+            }}>1</Text>
+          </View>
+          
         </View>
+
         <Formik
           initialValues={{ nome: '', nomeMae: '', email: '', sexo: 'MASCULINO', dob: new Date() }}
           validationSchema={validationSchema}
@@ -87,7 +110,7 @@ function Signup({ route }) {
             formData.append('nome', nome);
             formData.append('nomeMae', nomeMae);
             formData.append('sexo', sexo);
-            formData.append('cpf', cpf);
+            formData.append('cpf', cpf.replaceAll('.', '').replaceAll('-', ''));
             formData.append('dob', formatDateLocal(new Date(dob)));
             try {
               axios.post(`${API_URL}/ssp`, formData, {
@@ -99,14 +122,13 @@ function Signup({ route }) {
                 setTimeout(() => {
                   const resposta = res.data.existe;
                   if (resposta) {
-                    setUser({
+                    navigation.replace('SetupPass', {
                       nome: nome,
                       sexo: sexo,
                       cpf: cpf,
                       dob: formatDateLocal(new Date(dob)),
                       email: email
                     })
-                    setModalSucesso(true)
                   } else {
                     setModalErro(true)
                   }
@@ -181,10 +203,7 @@ function Signup({ route }) {
                 />
               )}
               <View style={[styles.botoes, {marginTop: 20}]}>
-                <Pressable style={styles.button2} onPress={() => { navigation.replace('Start') }}>
-                  <Text style={styles.buttonText2}>Cancelar</Text>
-                </Pressable>
-                <Pressable style={styles.button1} onPress={handleSubmit}>
+                <Pressable style={[styles.button, { width: '100%' }]} onPress={handleSubmit}>
                   <Text style={styles.buttonText}>Continuar</Text>
                 </Pressable>
               </View>
@@ -193,39 +212,6 @@ function Signup({ route }) {
             )}
         </Formik>
       </ScrollView>
-
-      
-
-
-      <Modal
-        visible={modalInformativo}
-        transparent={true}
-        
-      >
-        <View
-          style={styles.modal}
-        >
-
-          <View style={styles.modalContent}>
-
-            <Text style={styles.text}>Boas vindas! 🎉</Text>
-
-            <Text style={styles.text}></Text>
-            <Text style={styles.textJust}>Percebemos que você <Text style={styles.boldText}>não tem uma conta</Text> no Reintegra. Vamos criar uma agora?</Text>
-            <Text style={styles.textJust}></Text>
-            
-            <Text style={styles.textJust}>Para isso, vamos precisar de mais alguns dados. Clique em <Text style={styles.boldText}>continuar</Text> para adicionar as informações.</Text>
-            <Text style={styles.textJust}></Text>
-
-            <View style={[styles.botoes, {width: '100%'}]}>
-              <Pressable style={styles.buttonConfirm} onPress={() => setModalInformativo(false)} >
-                <Text style={styles.buttonSmallText}>Continuar</Text>
-              </Pressable>
-            </View>
-          </View>
-
-        </View>
-      </Modal>
 
       <Modal
         visible={modalErro}
@@ -257,38 +243,6 @@ function Signup({ route }) {
             </View>
           </View>
 
-
-        </View>
-
-      </Modal>
-
-
-      <Modal
-        visible={modalSucesso}
-        transparent={true}
-        
-      >
-        <View
-          style={styles.modal}
-        >
-
-          <View style={styles.modalContent}>
-
-            <Text style={styles.text}>Perfeito! 😉</Text>
-
-            <Text style={styles.text}></Text>
-            <Text style={styles.textJust}>Agora precisamos cadastrar os dados de acesso.</Text>
-            <Text style={styles.textJust}></Text>
-            
-            <Text style={styles.textJust}>É importante anotar a sua senha em um <Text style={styles.boldText}>local seguro</Text> para não perder o acesso à plataforma!</Text>
-            <Text style={styles.textJust}></Text>
-
-            <View style={[styles.botoes, {width: '100%'}]}>
-              <Pressable style={styles.button1} onPress={() => navigation.replace('SetupPass', user) } >
-                <Text style={styles.buttonSmallText}>Continuar</Text>
-              </Pressable>
-            </View>
-          </View>
 
         </View>
 

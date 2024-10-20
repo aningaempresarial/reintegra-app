@@ -1,232 +1,166 @@
-import React, { useEffect, useRef, useState } from "react";
-import { View, Text, Image, Pressable, StyleSheet, Button, Modal } from "react-native";
-import styles from "../styles/Choice";
+import React, { useState } from "react";
+import { View, Text, Pressable, StyleSheet, Modal, TextInput, Image, ScrollView, SafeAreaView, Keyboard } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import styles from "../styles/Signup";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { PinInput, PinInputRef } from '@pakenfit/react-native-pin-input';
-import { validarCPF } from "../functions/validaCpf";
-import LoadingModal from "../components/LoadingModal";
 import axios from "axios";
+import LoadingModal from "../components/LoadingModal";
 import { API_URL } from "../constraints";
-import { PassInput, PassInputRef } from "../components/pass/PassInput";
 
+import Input from "../components/TextInput";
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const validationSchema = Yup.object().shape({
   pass: Yup.string()
-    .required('Senha é obrigatório!')
-    .test('len', 'A senha deve ter 6 dígitos!', val => val && val.replace(/[^\d]/g, '').length === 6)
+    .required('Senha é obrigatória!')
+    .min(6, 'A senha deve ter 6 caracteres'),
+  confirmPass: Yup.string()
+    .oneOf([Yup.ref('pass'), null], 'As senhas não coincidem')
+    .required('Confirmação de senha é obrigatória!')
 });
 
 function SetupPass({ route }) {
   const { cpf, dob, email, nome, sexo } = route.params || {};
-
   const navigation = useNavigation();
   const [loading, setLoading] = useState(false);
-  const [modalIncorreto, setModalIncorreto] = useState(false);
   const [modalErro, setModalErro] = useState(false);
   const [modalSucesso, setModalSucesso] = useState(false);
-  const [confirmPass, setConfirmPass] = useState('');
 
-  const maskPassword = (value) => {
-    return '*'.repeat(value.length);
-  };
 
-  const [caixa1, setCaixa1] = useState(true);
-  const [caixa2, setCaixa2] = useState(false);
-  const [textoInstrucao, setTextoInstrucao] = useState('')
-  const [textoBotao, setTextoBotao] = useState('')
-
-  useEffect(() => {
-
-    if (caixa1) {
-      setTextoInstrucao('Crie a sua senha de acesso:')
-      setTextoBotao('Continuar')
-    } else {
-      setTextoInstrucao('Agora, confirme a sua senha de acesso:')
-      setTextoBotao('Confirmar')
-    }
-    ref2.current?.clear()
-
-  }, [caixa1])
-
-  
-  const ref1 = useRef(null);
-  const ref2 = useRef(null);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+
       <View style={styles.headerDiv}>
-        <Image
-          style={{ width: "80%", resizeMode: "contain" }}
-          source={require("../../assets/images/logo.png")}
-        />
-        <Text style={styles.headerText}>{textoInstrucao}</Text>
+        <Icon name="chevron-back-outline" size={60} style={styles.backButton} onPress={() => navigation.goBack()} />
+        <Image source={require('../../assets/icons/reintegra-fechadura.png')} style={{ height: 60, resizeMode: 'contain' }} />
+        <Icon name="help-circle-outline" size={60} style={styles.helpButton} />
+      </View>
+
+
+
+      <ScrollView style={{ width: '90%'}} >
         
+        <View style={[styles.textContainer]}>
+          <Text style={styles.title}>Senha de Acesso</Text>
+          <Text style={[styles.text, styles.textCenter]}>Crie a sua senha para acessar o aplicativo Reintegra</Text>
+
+          <View style={{
+            backgroundColor: '#ff914d',
+            width: 35,
+            height: 35,
+            borderRadius: 35,
+            justifyContent: 'center',
+            alignItems: 'center',
+            position: 'absolute',
+            left: 5,
+            top: 0
+          }}>
+            <Text style={{
+              color: 'white',
+              fontSize: 20,
+              fontWeight: 'bold',
+            }}>2</Text>
+          </View>
+            
+        </View>
+
         <Formik
-          initialValues={{ pass: ''}}
+          initialValues={{ pass: '', confirmPass: '' }}
           validationSchema={validationSchema}
           onSubmit={(values) => {
+            setLoading(true);
+            const formData = new FormData();
+            formData.append('nome', nome);
+            formData.append('email', email);
+            formData.append('senha', values.pass);
+            formData.append('sexo', sexo);
+            formData.append('cpf', cpf.replaceAll('.', '').replaceAll('-', ''));
+            formData.append('dataNasc', dob);
 
-
-            if (caixa1) {
-              setLoading(true);
-              setCaixa1(false)
-              setCaixa2(true)
-              setTimeout(() => {
+            axios.post(`${API_URL}/exDetento/simple`, formData, {
+              headers: { 'Content-Type': 'multipart/form-data' }
+            })
+              .then(() => {
                 setLoading(false);
-              }, 400)
-            } else {              
-
-              if (values.pass != confirmPass) {
-                setModalIncorreto(true);
-              } else {
-                setLoading(true);
-
-                if (typeof cpf != 'undefined') {
-
-                  const formData = new FormData();
-                  formData.append('nome', nome);
-                  formData.append('email', email);
-                  formData.append('senha', values.pass);
-                  formData.append('sexo', sexo);
-                  formData.append('cpf', cpf);
-                  formData.append('dataNasc', dob);
-  
-                  axios.post(`${API_URL}/exDetento/simple`, formData, {
-                    headers: {
-                      'Content-Type': 'multipart/form-data'
-                    }
-                  })
-                  .then(res => {
-                    setLoading(false)
-                    setModalSucesso(true);
-                  })
-                  .catch(err => {
-                    console.log(err)
-                    setLoading(false)
-                    setModalErro(true);
-                  })
-
-                } else {
-                  setLoading(false)
-                  setModalErro(true);
-                }
-                
-               
-              
-              }
-            }
-            
+                setModalSucesso(true);
+              })
+              .catch(() => {
+                setLoading(false);
+                setModalErro(true);
+              });
           }}
         >
-          {({ handleSubmit, values, errors, touched, setFieldValue }) => (
-            <View>
-
-              {caixa1 && (
-                <View>
-
-                <PassInput
-                  onFillEnded={(otp) => {
-                    setFieldValue('pass', otp);
+          {({ handleChange, handleSubmit, values, errors, touched, setFieldValue, setFieldTouched }) => (
+            <View style={styles.inputContainer}>
+              <View>
+                <Input
+                  label={'Senha'}
+                  style={{ fontSize: 20, width: '90%' }}
+                  estilo={[{ borderColor: errors.pass && touched.pass ? '#EE4B2B' : 'gray' }]}
+                  secureTextEntry={!showPassword}
+                  onChangeText={(text) => {
+                    setFieldValue('pass', text)
+                    setFieldTouched('pass')
+                    if (text.length >= 6) {
+                      Keyboard.dismiss();
+                    }
                   }}
-                  ref={ref1}
-                  autoFocus
-                  length={6}
-                  secretDelay={300} 
-                  inputStyle={[styles.pinInput, { width: 50, height: 50}]}
-                
+                  onBlur={() => setFieldTouched('pass')}
+                  keyboardType="numeric"
+                  maxLength={6}
                 />
-              
-                {errors.pass && touched.pass ? (
-                  <Text style={styles.errorText}>{errors.pass}</Text>
-                ) : null}
-                  
-                </View>
-              )}
-
-              {caixa2 && (
-                <View>
-
-                <PassInput
-                  onFillEnded={(otp) => {
-                    setConfirmPass(otp);
-                  }}
-                  ref={ref2}
-                  autoFocus
-                  length={6}
-                  secretDelay={300} 
-                  inputStyle={[styles.pinInput, { width: 50, height: 50 }]}
                 
-                />
-                </View>
-              )}
-
-              
-
-              <View style={{ flex: 0.3 }}></View>
-
-              <View style={[styles.botoes, {width: '100%'}]}>
-                <Pressable style={styles.button1} onPress={handleSubmit}>
-                  <Text style={styles.buttonText}>{textoBotao}</Text>
+                <Pressable onPress={() => setShowPassword(!showPassword)} style={styles.eye}>
+                  <Icon name={showPassword ? 'eye-off-outline' : 'eye-outline'} size={25} />
                 </Pressable>
               </View>
 
+              {errors.pass && touched.pass && <Text style={styles.errorText}>{errors.pass}</Text>}
+              
+              <View>
+                <Input
+                  label={'Confirmação de Senha'}
+                  style={[{ fontSize: 20, width: '90%' }]}
+                  estilo={[{ borderColor: errors.confirmPass && touched.confirmPass ? '#EE4B2B' : 'gray' }]}
+                  
+                  secureTextEntry={!showConfirmPassword}
+                  onChangeText={(text) => {
+                    setFieldValue('confirmPass', text)
+                    setFieldTouched('confirmPass')
+                    if (text.length >= 6) {
+                      Keyboard.dismiss();
+                    }
+                  }}
+                  onBlur={() => setFieldTouched('confirmPass')}
+                  keyboardType="numeric"
+                  maxLength={6}
+                />
+  
+                <Pressable onPress={() => setShowConfirmPassword(!showConfirmPassword)} style={styles.eye}>
+                  <Icon name={showConfirmPassword ? 'eye-off-outline' : 'eye-outline'} size={25} />
+                </Pressable>
+              </View>
+
+              {errors.confirmPass && touched.confirmPass && <Text style={styles.errorText}>{errors.confirmPass}</Text>}
+              <Pressable  style={[
+                styles.button,
+                {
+                  backgroundColor: Object.keys(errors).length > 0 ? 'gray' : '#ff914d',
+                  borderColor: Object.keys(errors).length > 0 ? 'gray' : '#fc573b',
+                  marginTop: 40,
+                },
+              ]} onPress={handleSubmit} >
+                <Text style={styles.buttonText}>Finalizar</Text>
+              </Pressable>
             </View>
           )}
         </Formik>
-      </View>
-      <LoadingModal visible={loading} />
+      </ScrollView>
 
-      <Modal
-        visible={modalIncorreto}
-        transparent={true}
-        
-      >
-        <View
-          style={styles.modal}
-        >
-
-          <View style={styles.modalContent}>
-
-          <Text style={styles.text}>❌ Confirmação de Senha Inválida ❌</Text>
-          <Text style={styles.text}></Text>
-
-          <Text style={styles.textJust}>Você errou na confirmação da senha.</Text>
-          <Text style={styles.textJust}></Text>
-
-          <Text style={styles.textJust}>Você pode voltar e digitar a senha novamente ou tentar confirmar a senha mais uma vez.</Text>
-          <Text style={styles.textJust}></Text>
-            
-            <Text style={styles.textJust}>É importante anotar a sua senha em um <Text style={styles.boldText}>local seguro</Text> para não perder o acesso à plataforma!</Text>
-            <Text style={styles.textJust}></Text>
-
-            <View style={[styles.botoes, {width: '100%'}]}>
-              <Pressable style={[styles.button4, { flex: 1 }]} onPress={() => {
-                setLoading(true)
-                setModalIncorreto(false)
-                setConfirmPass('')
-                ref1.current?.clear()
-                setCaixa1(true)
-                setCaixa2(false)
-                setTimeout(() => {
-                  setLoading(false)
-                }, 300)
-              } } >
-                <Text style={styles.buttonSmallText2}>Escolher Nova Senha</Text>
-              </Pressable>
-              <Pressable style={[styles.button3, { flex: 1 }]} onPress={() => { 
-                setModalIncorreto(false);
-                ref2.current?.clear()
-                }} >
-                <Text style={styles.buttonSmallText}>Tentar Novamente</Text>
-              </Pressable>
-            </View>
-          </View>
-
-        </View>
-
-      </Modal>
 
       <Modal
         visible={modalErro}
@@ -239,37 +173,23 @@ function SetupPass({ route }) {
 
           <View style={styles.modalContent}>
 
-          <Text style={styles.text}>❌ Aconteceu Algum Erro ❌</Text>
-          <Text style={styles.text}></Text>
+          <Text style={[styles.text, { width: '100%', textAlign: 'center'}, styles.boldText]}>❌ Aconteceu algum erro! ❌</Text>
 
-          <Text style={styles.textJust}>Durante o processo, aconteceu algum erro e não podemos prosseguir com o cadastro agora.</Text>
-          <Text style={styles.textJust}></Text>
-
-          <Text style={styles.textJust}>Você pode <Text style={styles.boldText}>cancelar</Text> o cadastro agora e tentar novamente <Text style={styles.boldText}>mais tarde</Text> ou entrar em <Text style={styles.boldText}>contato com o nosso suporte</Text>.</Text>
-          <Text style={styles.textJust}></Text>
-            
-            <Text style={styles.textJust}>Pedimos desculpas pela inconveniência.</Text>
+            <Text style={styles.text}></Text>
+            <Text style={styles.textJust}>Ao realizar o seu cadastro, aconteceu algum erro nos nossos sistemas.</Text>
+            <Text style={styles.textJust}></Text>
+            <Text style={styles.textJust}>Estamos trabalhando para arrumar esse problema. Tente novamente mais tarde.</Text>
             <Text style={styles.textJust}></Text>
 
-            <View style={[styles.botoes, {width: '100%'}]}>
-              <Pressable style={[styles.button4, { flex: 1 }]} onPress={() => {
-                setModalErro(false)
-                navigation.replace('Start')
-              } } >
-                <Text style={styles.buttonSmallText2}>Cancelar</Text>
-              </Pressable>
-              <Pressable style={[styles.button3, { flex: 1 }]} onPress={() => { 
-                setModalErro(false)
-                navigation.replace('Start')
-                }} >
-                <Text style={styles.buttonSmallText}>Suporte</Text>
-              </Pressable>
-            </View>
+            <Pressable style={[styles.button, { backgroundColor: 'white', width: '100%' } ]} onPress={() => setModalErro(false)}>
+              <Text style={[styles.buttonText, { color: '#112257', fontSize: 16 }]}>Tentar novamente</Text>
+            </Pressable>
           </View>
 
         </View>
 
       </Modal>
+
 
       <Modal
         visible={modalSucesso}
@@ -282,31 +202,30 @@ function SetupPass({ route }) {
 
           <View style={styles.modalContent}>
 
-            <Text style={styles.text}>Concluímos o Pré-Cadastro! 🤩</Text>
-            <Text style={styles.text}></Text>
+            <Text style={[styles.text, { width: '100%', textAlign: 'center'}, styles.boldText]}>
+              Cadastro feito com sucesso! 🤩
+            </Text>
 
-            <Text style={styles.textJust}>Agora, você já pode acessar sua conta e continuar o processo.</Text>
+            <Text style={styles.textJust}></Text>
+            <Text style={styles.textJust}>Pronto, terminamos o seu pré-cadastro.</Text>
+            <Text style={styles.textJust}></Text>
+            <Text style={styles.textJust}>
+              Clique em "Entendi" para voltar e entrar na sua conta.
+            </Text>
             <Text style={styles.textJust}></Text>
 
-            <Text style={styles.textJust}>Clique em "Entrar" para seguir para a próxima etapa.</Text>
-            <Text style={styles.textJust}></Text>
-            
-
-            <View style={[styles.botoes, {width: '100%'}]}>
-              <Pressable style={[styles.button3, { flex: 1 }]} onPress={() => { 
-                  navigation.replace('Login' , {
-                    cpf: cpf
-                  });
-                }} >
-                <Text style={styles.buttonSmallText}>Entrar</Text>
-              </Pressable>
-            </View>
+            <Pressable style={[styles.button, { backgroundColor: 'white', width: '100%' } ]} onPress={() => navigation.replace('Start')}>
+              <Text style={[styles.buttonText, { color: '#112257', fontSize: 16 }]}>Entendi</Text>
+            </Pressable>
           </View>
 
         </View>
 
       </Modal>
-    </View>
+
+
+      <LoadingModal visible={loading} />
+    </SafeAreaView>
   );
 }
 

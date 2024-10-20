@@ -8,8 +8,8 @@ export default StyleSheet.create({
       backgroundColor: '#fff',
     },
     headerDiv: {
-      flex: 1,
-      width: '100%',
+      flex: 4,
+      width: '90%',
       height: '100%',
       alignItems: 'center',
       justifyContent: 'space-evenly'
@@ -18,20 +18,25 @@ export default StyleSheet.create({
       fontSize: 24
     },
     button: {
-      backgroundColor: '#ef4232',
+      backgroundColor: '#ff914d',
       padding: 20,
-      paddingHorizontal: 40,
-      borderRadius: 50
+      width: '100%',
+      paddingHorizontal: 60,
+      borderRadius: 5,
+      borderStyle: 'solid',
+      borderColor: '#fc573b',
+      borderWidth: 2
     },
     buttonText: {
       color: '#fff',
-      fontSize: 24,
+      fontSize: 20,
       textTransform: 'uppercase',
       letterSpacing: 1,
-      fontWeight: 'bold'
+      fontWeight: 'bold',
+      textAlign: 'center'
     },
     imageDiv: {
-      flex: 0.8,
+      flex: 0.4,
       width: '100%',
       alignItems: 'center',
       justifyContent: 'flex-end'

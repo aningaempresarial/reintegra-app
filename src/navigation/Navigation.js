@@ -14,6 +14,7 @@ import Vaga from '../pages/Vaga';
 import Culturas from '../pages/Culturas';
 import Chats from '../pages/Chats';
 import Chat from '../pages/Chat';
+import PerfilEmpresa from '../pages/PerfilEmpresa';
 import Configuracoes from '../pages/Configuracoes';
 import EditarPerfil from '../pages/configs/EditarPerfil';
 import Notificacoes from '../pages/configs/Notificacoes';
@@ -29,7 +30,7 @@ const Stack = createNativeStackNavigator();
 
 function Navigation() {
   return (
-    <Stack.Navigator initialRouteName='Start'>
+    <Stack.Navigator initialRouteName='Home'>
       <Stack.Screen name="Splash" component={Splash} options={{ headerShown: false }}/>
       <Stack.Screen name="Start" component={Start} options={{ headerShown: false }}/>
       <Stack.Screen name="Login" component={Login} options={{ headerShown: false }}/>
@@ -56,6 +57,9 @@ function Navigation() {
       <Stack.Screen name="Vagas" component={Vagas} options={{ headerShown: false }}/>
 
       <Stack.Screen name="Vaga" component={Vaga} options={{ headerShown: false }}/>
+
+      <Stack.Screen name="PerfilEmpresa" component={PerfilEmpresa} options={{ headerShown: false }}/>
+
 
       <Stack.Screen name="Culturas" component={Culturas} options={{ headerShown: false }}/>
 

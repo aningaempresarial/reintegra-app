@@ -49,9 +49,17 @@ export function Navbar() {
                             <Icon name='chatbubble-outline' size={40} />
                             <Text style={styles.item}>Mensagens</Text>
                         </Pressable>
+                        <Pressable style={styles.itemMenu} onPress={() => navigation.navigate('CompletarCurriculo')}>
+                            <Icon name='clipboard-outline' size={40} />
+                            <Text style={styles.item}>Currículo</Text>
+                        </Pressable>
                         <Pressable style={styles.itemMenu} onPress={() => navigation.navigate('Vagas')}>
                             <Icon name='briefcase-outline' size={40} />
                             <Text style={styles.item}>Vagas</Text>
+                        </Pressable>
+                        <Pressable style={styles.itemMenu} onPress={() => navigation.navigate('PerfilEmpresa')}>
+                            <Icon name='business-outline' size={40} />
+                            <Text style={styles.item}>Empresas</Text>
                         </Pressable>
                         <Pressable style={styles.itemMenu} onPress={() => navigation.navigate('Configuracoes')}>
                             <Icon name='cog-outline' size={40} />

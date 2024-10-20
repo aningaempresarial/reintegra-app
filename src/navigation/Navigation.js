@@ -24,6 +24,8 @@ import Sobre from '../pages/configs/Sobre';
 import AjudaSuporte from '../pages/configs/AjudaSuporte';
 import RelatarProblema from '../pages/configs/RelatarProblema';
 import TermosPoliticas from '../pages/configs/TermosPoliticas';
+import Welcome from '../pages/Welcome';
+import NoAccountExplicacao from '../pages/NoAccountExplicacao';
 
 const Stack = createNativeStackNavigator();
 
@@ -32,8 +34,10 @@ function Navigation() {
     <Stack.Navigator initialRouteName='Start'>
       <Stack.Screen name="Splash" component={Splash} options={{ headerShown: false }}/>
       <Stack.Screen name="Start" component={Start} options={{ headerShown: false }}/>
+      <Stack.Screen name="Welcome" component={Welcome} options={{ headerShown: false }}/>
       <Stack.Screen name="Login" component={Login} options={{ headerShown: false }}/>
       <Stack.Screen name="Signup" component={Signup} options={{ headerShown: false }}/>
+      <Stack.Screen name="NoAccountExplicacao" component={NoAccountExplicacao} options={{ headerShown: false }}/>
       <Stack.Screen name="Choice" component={Choice} options={{ headerShown: false }}/>
       <Stack.Screen name="SetupPass" component={SetupPass} options={{ headerShown: false }}/>
       

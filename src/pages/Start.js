@@ -13,25 +13,23 @@ function Start() {
     <View style={styles.container}>
       <View style={styles.headerDiv}>
         <Image style={{width: '80%', resizeMode: 'contain'}} source={require('../../assets/images/logo.png')}/>
-        <Text style={styles.headerText}>Olá, seja bem-vindo!</Text>
+        
         <Pressable style={styles.button} onPress={async () => {
           setLoading(true)
 
           const token = await getItem('token');
-          if (token) {
-            setLoading(false)
-            navigation.replace('Home')
-          } else {
-            setLoading(false)
-            navigation.navigate("Choice")
-          } 
-
+          setTimeout(() => {
+            if (token) {
+              navigation.replace('Home')
+            } else {
+              navigation.replace("Welcome")
+            } 
+          }, 500)
         }}>
             <Text style={styles.buttonText}>Continuar</Text>
         </Pressable>
       </View>
       <View style={styles.imageDiv}>
-        <Image style={styles.imgDeco} source={require('../../assets/images/home-deco.png')}/>
       </View>
 
       <LoadingModal visible={loading} />

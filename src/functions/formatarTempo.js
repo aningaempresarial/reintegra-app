@@ -1,6 +1,10 @@
 export function formatarTempoDecorrido(data) {
     const agora = new Date();
-    const diferenca = Math.floor((agora - new Date(data)) / 1000);
+    const dataPostagem = new Date(data);
+  
+    const offset = agora.getTimezoneOffset() * 60 * 1000;
+  
+    const diferenca = Math.floor((agora.getTime() - (dataPostagem.getTime() - offset)) / 1000);
   
     const minutos = Math.floor(diferenca / 60);
     const horas = Math.floor(minutos / 60);

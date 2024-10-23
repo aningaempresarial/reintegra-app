@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import styles from '../styles/Home';
-import { View, Text, ScrollView, SafeAreaView, TextInput, TouchableOpacity, Image } from 'react-native';
+import createStyle from '../styles/Home';
+import { View, Text, ScrollView, SafeAreaView, TextInput, TouchableOpacity, Image, Modal, Dimensions, Pressable } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import IconA from 'react-native-vector-icons/FontAwesome';
 import { Navbar } from '../components/Navbar';
@@ -9,27 +9,104 @@ import { formatarTempoDecorrido } from '../functions/formatarTempo';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import { API_URL } from '../constraints';
+import { getItem, removeItem, setItem } from '../functions/AsyncStorage';
+
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import Zoom from 'react-native-zoom-reanimated'
+
+// periodo de atualizações das imagens (atualiza o timestaps que é um parametro passado para enganar o ReactNative)
+const PERIODO_ATUALIZACAO = 20 * 60 * 1000;
 
 const Home = () => {
   const navigation = useNavigation();
 
   const [currentPage, setCurrentPage] = useState(1);
-
   const [destaques, setDestaques] = useState([]);
+  const [filteredPosts, setFilteredPosts] = useState([]);
+  const [modalZoomImage, setModalZoomImage] = useState(false);
+  const [uriImageModal, setUriImageModal] = useState('');
+
+  const screenWidth = Dimensions.get('window').width;
+
+  function openImage(uri) {
+    setModalZoomImage(true);
+    setUriImageModal(uri);
+  }
 
   useEffect(() => {
-    axios.get(`${API_URL}/post/destaques`)
+    axios.get(`${API_URL}/post/all`)
       .then(res => {
         const destaquesComImagemCompleta = res.data.map(destaque => ({
           ...destaque,
-          imagem: `${API_URL}${destaque.imagem}`,
+          fotoPerfil: `${API_URL}${destaque.fotoPerfil}`,
+          imagem: `${API_URL}${destaque.imagemPostagem}`,
         }));
         setDestaques(destaquesComImagemCompleta);
+        setFilteredPosts(destaquesComImagemCompleta);
       })
       .catch(error => {
         console.error("Erro ao buscar destaques:", error);
       });
   }, []);
+
+  const [fontSize, setFontSize] = useState(null);
+
+  const [selectedCategories, setSelectedCategories] = useState([]);
+
+  const filterPostsByCategory = (category) => {
+    setSelectedCategories(prev => {
+      if (prev.includes(category)) {
+        return prev.filter(item => item !== category);
+      } else {
+        return [...prev, category];
+      }
+    });
+  };
+
+  useEffect(() => {
+    if (selectedCategories.length > 0) {
+      const filtered = destaques.filter(post => selectedCategories.includes(post.categoriaPostagem));
+      setFilteredPosts(filtered);
+    } else {
+      setFilteredPosts(destaques);
+    }
+  }, [selectedCategories, destaques]);
+
+  useEffect(() => {
+    
+    async function fetchFontSize() {
+      const size = await getItem('fontSize');
+      if (!size) {
+        await setItem('fontSize', 18);
+        setFontSize(18);
+      } else {
+        setFontSize(size);
+      }
+    }
+    fetchFontSize();
+  }, []);
+
+  const styles = createStyle(fontSize);
+
+  const [timestamp, setTimestamp] = useState(new Date().getTime());
+
+  async function checkTimeToUpdate() {
+    const lastupdate = await getItem('lastupdate');
+    const now = new Date().getTime();
+
+    if (!lastupdate || (now - parseInt(lastupdate) > PERIODO_ATUALIZACAO)) {
+      setTimestamp(now)
+      await setItem('lastupdate', now)
+      console.log('update')
+    } else {
+      console.log('sem update')
+      setTimestamp(lastupdate)
+    }
+  }
+
+  useEffect(() => {
+    checkTimeToUpdate();
+  }, [])
   
   return (
     <SafeAreaView style={styles.container}>
@@ -129,49 +206,111 @@ const Home = () => {
           </View>
 
           <Text style={styles.subtitle}>Categorias</Text>
-
           <View style={styles.cardCategoriasContainer}>
-
-            <TouchableOpacity style={[styles.cardCategoria, {marginLeft: 0} ]} onPress={() => navigation.navigate('Vagas')}>
+            <TouchableOpacity
+              style={[
+                styles.cardCategoria, 
+                { 
+                  marginLeft: 0, 
+                  borderWidth: selectedCategories.length > 0 && selectedCategories.includes('emprego') ? 1 : 1,
+                  borderColor: selectedCategories.includes('emprego') ? '#414d86' : 'transparent',
+                  opacity: selectedCategories.length === 0 || selectedCategories.includes('emprego') ? 1 : 0.4
+                }
+              ]}
+              onPress={() => filterPostsByCategory('emprego')}
+            >
               <Image
                 style={styles.cardCategoriaImage}
                 source={require('../../assets/images/emprego-card-image.png')}
               />
-              <Text style={styles.textCategoria}>Emprego</Text>
+              <Text style={styles.textCategoria}>
+                Emprego
+              </Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.cardCategoria}>
+            <TouchableOpacity
+              style={[
+                styles.cardCategoria, 
+                { 
+                  borderWidth: selectedCategories.length > 0 && selectedCategories.includes('informativo') ? 1 : 1,
+                  borderColor: selectedCategories.includes('informativo') ? '#414d86' : 'transparent',
+                  opacity: selectedCategories.length === 0 || selectedCategories.includes('informativo') ? 1 : 0.4
+                }
+              ]}
+              onPress={() => filterPostsByCategory('informativo')}
+            >
               <Image
                 style={styles.cardCategoriaImage}
                 source={require('../../assets/images/educacao-card-image.png')}
               />
-              <Text style={styles.textCategoria}
-              >Educação</Text>
+              <Text style={styles.textCategoria}>
+                Informação
+              </Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={[styles.cardCategoria, {marginRight: 0} ]} onPress={() => navigation.navigate('Culturas')}>
+            <TouchableOpacity
+              style={[
+                styles.cardCategoria, 
+                { 
+                  marginRight: 0, 
+                  borderWidth: selectedCategories.length > 0 && selectedCategories.includes('divulgacao') ? 1 : 1,
+                  borderColor: selectedCategories.includes('divulgacao') ? '#414d86' : 'transparent',
+                  opacity: selectedCategories.length === 0 || selectedCategories.includes('divulgacao') ? 1 : 0.4 
+                }
+              ]}
+              onPress={() => filterPostsByCategory('divulgacao')}
+            >
               <Image
                 style={styles.cardCategoriaImage}
                 source={require('../../assets/images/cultura-card-image.png')}
               />
-              <Text style={styles.textCategoria}>Cultura</Text>
+              <Text style={styles.textCategoria}>
+                Divulgação
+              </Text>
             </TouchableOpacity>
-
           </View>
+
+
+
 
           <View style={styles.oportunidadesContainer}>
 
-            {destaques.map((destaque, i) => (
-              <TouchableOpacity style={styles.oportunidadeCard} key={i}>
-                <Image
-                  style={styles.imagemOportunidade}
-                  source={{ uri: destaque.imagem }}
+            {filteredPosts.map((destaque, i) => (
+              <View style={styles.oportunidadeCard} key={i}>
 
-                />
-                <Text style={styles.tituloOportunidade}>{destaque.nome}</Text>
-                <Text style={styles.textoTempoOportunidade}>{formatarTempoDecorrido(destaque.data)}</Text>
 
-              </TouchableOpacity>
+                <Pressable style={styles.divInfoUsuario} onPress={() => {
+                  navigation.navigate('PerfilEmpresa', {
+                    usuario: destaque.usuario
+                  })
+                }}>
+                  <Image
+                    style={styles.empresaFoto}
+                    source={{ uri: destaque.fotoPerfil + `?t=${timestamp}` }}
+                  />
+
+                  <View style={styles.infoUsuario}>
+                    <Text style={styles.nomeUsuario}>{ destaque.nomeEmpresa }</Text>
+                    <Text style={styles.textoTempoOportunidade}>{formatarTempoDecorrido(destaque.dtPostagem)}</Text>
+                  </View>
+                </Pressable>
+
+                <View style={{ width: '90%' }}>
+                  <Text style={styles.tituloPost}>{ destaque.tituloPostagem }</Text>
+                  <Text style={styles.corpoPost}>{ destaque.conteudoPostagem }</Text>
+                </View>
+
+
+                <TouchableOpacity style={styles.imagemOportunidade} onPress={() => openImage(destaque.imagem)}>
+                  <Image
+                      style={styles.imagemOportunidade}
+                      source={{ uri: destaque.imagem }}
+                  />
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.saibaMais}><Text style={styles.textoSaibaMais}>Saiba Mais</Text></TouchableOpacity>
+
+              </View>
             ))}
          
           </View>
@@ -179,6 +318,42 @@ const Home = () => {
 
         </View>
       </ScrollView>
+
+      <Modal
+        visible={modalZoomImage}
+        transparent={true}
+        animationType='fade'
+      >
+
+        <View style={styles.modalZoomImage}>
+
+          <TouchableOpacity style={{ zIndex: 2, margin: 20 }} onPress={() => setModalZoomImage(false)}>
+            <Icon name='close-circle-outline' size={50} color="#FFF" style={{
+              position: 'absolute',
+              top: 0,
+              right: 0
+            }} />
+          </TouchableOpacity>
+
+
+          <View style={{ width: '100%', flex: 1 }}>
+            <GestureHandlerRootView>
+              <Zoom>
+                <Image
+                  source={{ uri: uriImageModal }}
+                  resizeMode='contain'
+                  style={{
+                    width: screenWidth,
+                    height: 330 * screenWidth / 600,
+                   }}
+                />
+              </Zoom>
+            </GestureHandlerRootView>
+          </View>
+          
+        </View>
+
+      </Modal>
     </SafeAreaView>
   );
 };

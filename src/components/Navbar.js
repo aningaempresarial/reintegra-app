@@ -2,7 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 import { Image, Modal, Pressable, StyleSheet, View, Text } from "react-native";
 import Icon from 'react-native-vector-icons/Ionicons';
-import { clear } from "../functions/AsyncStorage";
+import { clear, removeItem } from "../functions/AsyncStorage";
 
 export function Navbar() {
     const navigation = useNavigation();
@@ -57,10 +57,6 @@ export function Navbar() {
                             <Icon name='briefcase-outline' size={40} />
                             <Text style={styles.item}>Vagas</Text>
                         </Pressable>
-                        <Pressable style={styles.itemMenu} onPress={() => navigation.navigate('PerfilEmpresa')}>
-                            <Icon name='business-outline' size={40} />
-                            <Text style={styles.item}>Empresas</Text>
-                        </Pressable>
                         <Pressable style={styles.itemMenu} onPress={() => navigation.navigate('Configuracoes')}>
                             <Icon name='cog-outline' size={40} />
                             <Text style={styles.item}>Configurações</Text>
@@ -69,7 +65,7 @@ export function Navbar() {
                         <Pressable style={styles.exitButton} onPress={() => {
                             closeModal()
 
-                            clear()
+                            removeItem('token')
 
                             navigation.navigate('Start')
                         }}>

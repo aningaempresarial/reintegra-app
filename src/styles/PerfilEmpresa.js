@@ -1,6 +1,9 @@
 import { StyleSheet } from "react-native";
 
-export default StyleSheet.create({
+
+
+export default createStyle = (fontSize) => {
+  return StyleSheet.create({
     container: {
       flex: 1,
       justifyContent: 'center',
@@ -8,16 +11,14 @@ export default StyleSheet.create({
     },
     header: {
       flex: 1,
-      width: '100%',
+      width: '90%',
       paddingTop:15
     },
     title: {
-      fontSize: 25,
+      fontSize: fontSize+4,
       fontWeight: 'bold',
-      letterSpacing: 2,
-      color: '#112257',
       textAlign: 'left',
-      width: '60%',
+      width: '100%',
     },
     subtitle: {
       fontSize: 18,
@@ -203,20 +204,19 @@ export default StyleSheet.create({
       textAlign: 'center'
     },
     scrollContainer: {
-        width: '100%',
-        paddingLeft: '5%',
+      width: '100%',
+      backgroundColor: '#f5f8ff'
     },
     header: {
-        paddingTop: 20,
-        paddingBottom: 20,
-        backgroundColor: '#fff',
-        alignItems: 'center',
+      width: '100%',
+      backgroundColor: '#fff',
+      alignItems: 'center',
     },
     logo: {
-        width: 80,
-        height: 80,
-        borderRadius: 40,
-        marginBottom: 10,
+      width: 80,
+      height: 80,
+      borderRadius: 40,
+      marginBottom: 10,
     },
     empresaNome: {
         fontSize: 18,
@@ -229,13 +229,13 @@ export default StyleSheet.create({
         marginBottom: 5,
     },
     descricao: {
-        fontSize: 14,
-        textAlign: 'center',
-        color: '#555',
-        paddingHorizontal: 20,
+      fontSize: fontSize,
+      textAlign: 'center',
+      color: '#555',
+      paddingHorizontal: 20,
     },
     verMais: {
-        fontSize: 14,
+        fontSize: fontSize,
         color: '#0066cc',
         marginTop: 5,
     },
@@ -273,7 +273,7 @@ export default StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         marginBottom: 15,
-        backgroundColor: '#fff', // Adicione um fundo se necessário
+        backgroundColor: '#fff',
         padding: 10,
         borderRadius: 10,
         shadowColor: '#000',
@@ -283,66 +283,58 @@ export default StyleSheet.create({
         },
         shadowOpacity: 0.2,
         shadowRadius: 2,
-        elevation: 3, // Para Android
+        elevation: 3,
     },
     image: {
-        width: 50, // Ajuste conforme necessário
-        height: 50, // Ajuste conforme necessário
-        borderRadius: 10, // Mantém as bordas arredondadas
+        width: 50,
+        height: 50,
+        borderRadius: 10,
         marginRight: 10,
     },
     textContainer: {
         flex: 1,
-    },
-    title: {
-        fontSize: 16,
-        fontWeight: 'bold',
     },
     time: {
         fontSize: 14,
         color: 'gray',
     },
     fundoazul: {
-        width: '200%', 
-        height: 150,  
+      width: '100%', 
+      height: 150,  
     },
     empresa: {
-        width: 120,            // Tamanho do ícone
-        height: 120,           // Tamanho do ícone
-        borderRadius: 90,      // Metade do tamanho para manter arredondado
+        width: 100,
+        height: 100,
+        borderRadius: 100,
         position: 'absolute',
-        bottom: -45,           // Para sobrepor na parte inferior do fundo azul
-        left: 3,              // Ajuste este valor para mover o ícone mais à esquerda
-        backgroundColor: '#fff',
-        borderWidth: 4,
-        borderColor: '#fff',
+        bottom: -45,
+        left: 20,
     },
     nome: { 
-        fontSize: 25, 
+        fontSize: fontSize+6, 
         fontWeight: 'bold', 
-        marginTop: 70 
+        marginTop: 70
     },
     local: { 
-        fontSize: 13,
-        color: '#777', 
-        marginBottom: 3, 
-        marginTop: 15 
+      fontSize: fontSize,
+      color: '#777',
+      marginBottom: 3,
     },
     descricao: { 
-        fontSize: 17, 
-        textAlign: 'justify', 
-        letterSpacing: 1, 
-        marginTop: 15, 
-        marginRight: 15
+      fontSize: fontSize, 
+      textAlign: 'justify', 
+      letterSpacing: 1, 
+      marginTop: 2, 
+      marginRight: 15
     },
     text1: {
-        fontSize: 25, 
+        fontSize: fontSize+4, 
         fontWeight: 'bold', 
         marginTop: 30, 
         paddingRight:20
     },
     text2:{
-        fontSize: 15, 
+        fontSize: fontSize-2, 
         color: 'blue', 
         fontStyle: 'italic',
         marginTop: 36,
@@ -368,17 +360,13 @@ export default StyleSheet.create({
       paddingRight:20
     },
     text4: {
-      fontSize: 10, 
-        color: 'gray',
-        fontWeight: 'bold',
-        fontStyle: 'italic', 
-        marginTop: 36,
-        marginLeft: 5,
-        marginRight: 20
+      fontSize: fontSize-4, 
+      color: 'gray',
+      fontWeight: '400',
     },
     imagemmapa: {
-      width: '100%',  // Largura total da tela
-      height: 200,    // Altura definida, ajuste conforme sua necessidade
+      width: '100%',
+      height: 200,
       marginTop: 18,
       marginRight: 20,
     },
@@ -386,5 +374,30 @@ export default StyleSheet.create({
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
-    }
-});
+    },
+    map: {
+      width: '100%',
+      height: 500,
+      marginVertical: 20,
+    },
+    customMarker: {
+      justifyContent: 'center',
+      alignItems: 'center',
+      width: '100%',
+      height: 60,
+      borderRadius: 60,
+      backgroundColor: 'black'
+    },
+    markerBackground: {
+      width: 60,
+      height: 60,
+      backgroundColor: 'transparent',
+      position: 'absolute',
+    },
+    markerLogo: {
+      width: 60,
+      height: 60,
+      borderRadius: 60,
+    },
+  });
+}

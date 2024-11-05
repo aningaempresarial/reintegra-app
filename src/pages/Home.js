@@ -41,6 +41,7 @@ const Home = () => {
           fotoPerfil: `${API_URL}${destaque.fotoPerfil}`,
           imagem: `${API_URL}${destaque.imagemPostagem}`,
         }));
+        console.log(res.data)
         setDestaques(destaquesComImagemCompleta);
         setFilteredPosts(destaquesComImagemCompleta);
       })
@@ -308,7 +309,13 @@ const Home = () => {
                   />
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.saibaMais}><Text style={styles.textoSaibaMais}>Saiba Mais</Text></TouchableOpacity>
+                <TouchableOpacity style={styles.saibaMais} onPress={() => navigation.navigate("Vaga", {
+                  vagaId: destaque.idPostagem,
+                  nomeVaga: destaque.tituloPostagem,
+                  textoVaga: destaque.conteudoPostagem,
+                  imagemVaga: `${API_URL}${destaque.imagemPostagem}`,
+                  destaque: destaque
+                  })}><Text style={styles.textoSaibaMais}>Saiba Mais</Text></TouchableOpacity>
 
               </View>
             ))}

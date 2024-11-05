@@ -3,11 +3,11 @@ import { Picker } from "@react-native-picker/picker";
 import { StyleSheet, TextInput, View, Text } from "react-native"
 import Icon from "react-native-vector-icons/Ionicons";
 
-export default function SelectInput({label, selectedValue, onValueChange, options, ...props}) {
+export default function SelectInput({label, selectedValue, onValueChange, options, estilo, ...props}) {
     return <View>
-      <Text style={styles.label}>{label}</Text>
+      <Text style={[styles.label, estilo]}>{label}</Text>
 
-      <View style={[styles.inputContainer]}>
+      <View style={[styles.inputContainer, estilo]}>
             <Picker
                     selectedValue={selectedValue}
                     onValueChange={onValueChange}
@@ -36,7 +36,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         borderRadius: 5,
-        width: '90%'
+        width: '90%',
+        backgroundColor: 'white'
     },
     txtInput: {
         flex: 1, 

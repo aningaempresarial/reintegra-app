@@ -1,6 +1,8 @@
 import { StyleSheet, TouchableOpacityBase } from "react-native";
 
-export default StyleSheet.create({
+
+export default createStyle = (fontSize) => {
+  return StyleSheet.create({
     container: {
       flex: 1,
       justifyContent: 'center',
@@ -14,7 +16,7 @@ export default StyleSheet.create({
       alignItems: 'center'
     },
     title: {
-      fontSize: 30,
+      fontSize: fontSize+4,
       fontWeight: 'bold',
       letterSpacing: 1,
       color: '#112257',
@@ -30,7 +32,7 @@ export default StyleSheet.create({
       width: '95%',
     },
     subtitle: {
-      fontSize:14,
+      fontSize: fontSize-3,
       fontWeight: 'light',
       textAlign: 'left',
       paddingTop: '10%'
@@ -64,7 +66,7 @@ export default StyleSheet.create({
     },
     options: {
       fontWeight: '600',
-      fontSize: 18,
+      fontSize: fontSize-2,
       letterSpacing: 1,
       flex: 1,
       margin: 10
@@ -141,7 +143,7 @@ export default StyleSheet.create({
       fontWeight: 'bold'
     },
     textoCorrido: {
-      fontSize: 12,
+      fontSize: fontSize-3,
       marginBottom: 15
     },
     inputDiv: {
@@ -154,6 +156,6 @@ export default StyleSheet.create({
     input: {
       width: '100%',
       padding: 10
-    }
-    
-})
+    }  
+  })
+}

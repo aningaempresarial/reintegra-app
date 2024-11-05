@@ -1,1 +1,1 @@
-export const API_URL = 'http://yotozangue.ddns.net:8080'
+export const API_URL = 'http://192.168.15.71:8080'

@@ -1,12 +1,31 @@
-import React, { useState } from 'react';
-import styles from '../../styles/Configuracoes';
+import React, { useEffect, useState } from 'react';
+import createStyle from '../../styles/Configuracoes';
 import { View, Text, StyleSheet, Image,ScrollView, SafeAreaView, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Navbar } from '../../components/Navbar';
 import { useNavigation } from '@react-navigation/native';
+import { getItem, setItem } from '../../functions/AsyncStorage';
 
 const CompartilharPerfil = () => {
     const navigation = useNavigation();
+
+    const [fontSize, setFontSize] = useState(null);
+
+    useEffect(() => {
+        async function fetchFontSize() {
+          const size = await getItem('fontSize');
+          if (!size) {
+            await setItem('fontSize', 18);
+            setFontSize(18);
+          } else {
+            setFontSize(size);
+          }
+        }
+        fetchFontSize();
+    }, []);
+
+
+    const styles = createStyle(fontSize);
 
     return (
         <SafeAreaView style={styles.container}>

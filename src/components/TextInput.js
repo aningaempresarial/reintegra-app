@@ -3,7 +3,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 
 export default function Input({label, estilo, ...props}) {
     return <View>
-      <Text style={styles.label}>{label}</Text>
+      <Text style={[styles.label, estilo]}>{label}</Text>
 
       <View style={[styles.inputContainer, estilo]}>
         <TextInput 
@@ -28,7 +28,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         paddingHorizontal: 15,
         alignItems: 'center',
-        borderRadius: 5
+        borderRadius: 5,
+        backgroundColor: 'white'
     },
     txtInput: {
         flex: 1, 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../styles/Chats";
 import {
   View,
@@ -18,6 +18,9 @@ import { formatarTempoDecorrido } from "../functions/formatarTempo";
 import { useNavigation } from "@react-navigation/native";
 import { Poppins_700Bold, Poppins_400Regular, useFonts } from "@expo-google-fonts/poppins";
 import LoadingModal from "../components/LoadingModal";
+import { getItem, setItem } from "../functions/AsyncStorage";
+import axios from "axios";
+import { API_URL } from "../constraints";
 
 const Chats = () => {
   const navigation = useNavigation();
@@ -27,9 +30,54 @@ const Chats = () => {
     Poppins_700Bold,
   });
 
+  const [fontSize, setFontSize] = useState(null);
+
+  const [timestamp, setTimestamp] = useState(new Date().getTime());
+
+  async function getLastUpdate() {
+    const lastupdate = await getItem('lastupdate');
+    setTimestamp(lastupdate);
+  }
+
+
+  useEffect(() => {
+      async function fetchFontSize() {
+        const size = await getItem('fontSize');
+        if (!size) {
+          await setItem('fontSize', 18);
+          setFontSize(18);
+        } else {
+          setFontSize(size);
+        }
+      }
+      fetchFontSize();
+
+      getLastUpdate();
+  }, []);
+
+
+  const [chats, setChats] = useState([])
+
+  async function getChats() {
+    const token = await getItem('token');
+    
+    axios.get(`${API_URL}/mensagem/mensagens?token=${token}`)
+    .then(res => {
+      setChats(res.data)
+    })
+    .catch(err => {
+      console.error(err)
+    })
+  }
+
+  useEffect(() => {
+    getChats();
+  }, [])
+
   if (!fontsLoaded) {
     return <LoadingModal/>;
   }
+
 
   return (
     <SafeAreaView style={styles.container}>
@@ -48,36 +96,27 @@ const Chats = () => {
 
           <Text style={styles.title}>Chats</Text>
 
-            <View style={styles.listaContatosContainer}>
-                <TouchableOpacity style={styles.contatoDiv} onPress={() => navigation.navigate('Chat')}>
-                    <View style={styles.imgContatoContainer}>
-                        <Image style={styles.imgContato} source={require('../../assets/images/microsoft-photo.jpeg')}/>
+    
+
+          <View style={styles.listaContatosContainer}>
+
+            {chats.map((chat, i) => (
+              <TouchableOpacity key={i} style={styles.contatoDiv} onPress={() => navigation.navigate('Chat', { conversa: chat, indice: i })}>
+                <View style={styles.imgContatoContainer}>
+                  <Image style={styles.imgContato} source={{ uri: `${API_URL}${chat.fotoPerfil}?t=${timestamp}` }}/>
+                </View>
+                <View style={styles.infosContatoContainer}>
+                    <View style={styles.infosContato}>
+                        <Text style={styles.nomeContato}>{chat.nomeUsuario}</Text>
                     </View>
-                    <View style={styles.infosContatoContainer}>
-                        <View style={styles.infosContato}>
-                            <Text style={styles.nomeContato}>Microsoft</Text>
-                            <Text style={styles.horarioContato}>10:10</Text>
-                        </View>
-                        <View style={styles.mensagemContatoContainer}>
-                            <Text style={styles.mensagemContato}>Não.</Text>
-                        </View>
-                    </View>
-                </TouchableOpacity>
-                <View style={styles.contatoDiv}>
-                    <View style={styles.imgContatoContainer}>
-                        <Image style={styles.imgContato} source={require('../../assets/images/oracle-photo.png')}/>
-                    </View>
-                    <View style={styles.infosContatoContainer}>
-                        <View style={styles.infosContato}>
-                            <Text style={styles.nomeContato}>Oracle</Text>
-                            <Text style={styles.horarioContato}>16:48</Text>
-                        </View>
-                        <View style={styles.mensagemContatoContainer}>
-                            <Text style={styles.mensagemContato}>Bom dia, temos uma proposta...</Text>
-                        </View>
+                    <View style={styles.mensagemContatoContainer}>
+                        <Text style={styles.mensagemContato}>{chat.mensagens[chat.mensagens.length-1].conteudoMensagem}</Text>
                     </View>
                 </View>
-            </View>
+              </TouchableOpacity>
+            ))}
+
+          </View>
 
         </View>
       </ScrollView>

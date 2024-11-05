@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import styles from '../../styles/Configuracoes';
+import React, { useEffect, useState } from 'react';
+import createStyle from '../../styles/Configuracoes';
 import { View, Text, Switch, ScrollView, SafeAreaView } from 'react-native';
 import { Navbar } from '../../components/Navbar';
 import { useNavigation } from '@react-navigation/native';
+import { getItem, setItem } from '../../functions/AsyncStorage';
 
 const Notificacoes = () => {
     const [isEnabled1, setIsEnabled1] = useState(false);
@@ -28,6 +29,25 @@ const Notificacoes = () => {
 
 
     const navigation = useNavigation();
+
+
+    const [fontSize, setFontSize] = useState(null);
+
+    useEffect(() => {
+        async function fetchFontSize() {
+          const size = await getItem('fontSize');
+          if (!size) {
+            await setItem('fontSize', 18);
+            setFontSize(18);
+          } else {
+            setFontSize(size);
+          }
+        }
+        fetchFontSize();
+    }, []);
+
+
+    const styles = createStyle(fontSize);
     
 
     return (
@@ -39,7 +59,7 @@ const Notificacoes = () => {
                 </View>
                 <View style={styles.content}>
                     <View  style={styles.buttonOptions}>
-                        <Text style={{color: 'grey', fontWeight: 'bold'}}>Novas vagas de emprego</Text>
+                        <Text style={{color: 'grey', fontWeight: 'bold', fontSize: fontSize-3}}>Novas vagas de emprego</Text>
                         <Switch
                             trackColor={{ false: "#767577", true: "grey" }}
                             thumbColor={isEnabled1 ? "#ff5733" : "#f4f3f4"}
@@ -48,7 +68,7 @@ const Notificacoes = () => {
                         />
                     </View>
                     <View  style={styles.buttonOptions}>
-                        <Text style={{color: 'grey', fontWeight: 'bold'}}>Novos Eventos</Text>
+                        <Text style={{color: 'grey', fontWeight: 'bold', fontSize: fontSize-3}}>Novos Eventos</Text>
                         <Switch
                             trackColor={{ false: "#767577", true: "grey" }}
                             thumbColor={isEnabled2 ? "#ff5733" : "#f4f3f4"}
@@ -57,25 +77,7 @@ const Notificacoes = () => {
                         />
                     </View>
                     <View  style={styles.buttonOptions}>
-                        <Text style={{color: 'grey', fontWeight: 'bold'}}>Menções e marcações</Text>
-                        <Switch
-                            trackColor={{ false: "#767577", true: "grey" }}
-                            thumbColor={isEnabled3 ? "#ff5733" : "#f4f3f4"}
-                            onValueChange={toggleSwitch3}
-                            value={isEnabled3}
-                        />
-                    </View>
-                    <View  style={styles.buttonOptions}>
-                        <Text style={{color: 'grey', fontWeight: 'bold'}}>Status das atividades</Text>
-                        <Switch
-                            trackColor={{ false: "#767577", true: "grey" }}
-                            thumbColor={isEnabled4 ? "#ff5733" : "#f4f3f4"}
-                            onValueChange={toggleSwitch4}
-                            value={isEnabled4}
-                        />
-                    </View>
-                    <View  style={styles.buttonOptions}>
-                        <Text style={{color: 'grey', fontWeight: 'bold'}}>Novas Publicações</Text>
+                        <Text style={{color: 'grey', fontWeight: 'bold', fontSize: fontSize-3}}>Novas Publicações</Text>
                         <Switch
                             trackColor={{ false: "#767577", true: "grey" }}
                             thumbColor={isEnabled5 ? "#ff5733" : "#f4f3f4"}
@@ -84,16 +86,7 @@ const Notificacoes = () => {
                         />
                     </View>
                     <View  style={styles.buttonOptions}>
-                        <Text style={{color: 'grey', fontWeight: 'bold'}}>Visualização de perfil</Text>
-                        <Switch
-                            trackColor={{ false: "#767577", true: "grey" }}
-                            thumbColor={isEnabled6 ? "#ff5733" : "#f4f3f4"}
-                            onValueChange={toggleSwitch6}
-                            value={isEnabled6}
-                        />
-                    </View>
-                    <View  style={styles.buttonOptions}>
-                        <Text style={{color: 'grey', fontWeight: 'bold'}}>Novas mensagens</Text>
+                        <Text style={{color: 'grey', fontWeight: 'bold', fontSize: fontSize-3}}>Novas mensagens</Text>
                     
                         <Switch
                             trackColor={{ false: "#767577", true: "grey" }}
@@ -102,25 +95,6 @@ const Notificacoes = () => {
                             value={isEnabled7}
                         />
                     </View>
-                    <View  style={styles.buttonOptions}>
-                        <Text style={{color: 'grey', fontWeight: 'bold'}}>Notificações por email</Text>
-                        <Switch
-                            trackColor={{ false: "#767577", true: "grey" }}
-                            thumbColor={isEnabled8 ? "#ff5733" : "#f4f3f4"}
-                            onValueChange={toggleSwitch8}
-                            value={isEnabled8}
-                        />
-                    </View>
-                    <View  style={styles.buttonOptions}>
-                        <Text style={{color: 'grey', fontWeight: 'bold'}}>Atualizações semanais</Text>
-                        <Switch
-                            trackColor={{ false: "#767577", true: "grey" }}
-                            thumbColor={isEnabled9 ? "#ff5733" : "#f4f3f4"}
-                            onValueChange={toggleSwitch9}
-                            value={isEnabled9}
-                        />
-                    </View>
-                    
                 </View>
             </ScrollView>
         </SafeAreaView>

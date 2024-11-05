@@ -1,12 +1,31 @@
-import React, { useState } from 'react';
-import styles from '../styles/Configuracoes';
+import React, { useEffect, useState } from 'react';
+import createStyle from '../styles/Configuracoes';
 import { View, Text, StyleSheet,ScrollView, SafeAreaView, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Navbar } from '../components/Navbar';
 import { useNavigation } from '@react-navigation/native';
+import { getItem, setItem } from '../functions/AsyncStorage';
 
 const Configuracoes = () => {
     const navigation = useNavigation();
+
+    const [fontSize, setFontSize] = useState(null);
+
+    useEffect(() => {
+        async function fetchFontSize() {
+          const size = await getItem('fontSize');
+          if (!size) {
+            await setItem('fontSize', 18);
+            setFontSize(18);
+          } else {
+            setFontSize(size);
+          }
+        }
+        fetchFontSize();
+    }, []);
+
+
+    const styles = createStyle(fontSize);
 
     return (
         <SafeAreaView style={styles.container}>
@@ -22,15 +41,15 @@ const Configuracoes = () => {
                 <View style={styles.content}>
 
                     <TouchableOpacity style={styles.icones} onPress={() => navigation.navigate('EditarPerfil')}>
-                        <Icon name='person' size={20} />
+                        <Icon name='person' size={fontSize-2} />
                         <Text style={styles.options}>Editar perfil</Text>
-                        <Icon name="chevron-forward-outline" size={20}/>
+                        <Icon name="chevron-forward-outline" size={fontSize-2}/>
                     </TouchableOpacity>
 
                     <TouchableOpacity style={styles.icones} onPress={() => navigation.navigate('Notificacoes')}>
-                        <Icon name='notifications-outline' size={20} />
+                        <Icon name='notifications-outline' size={fontSize-2} />
                         <Text style={styles.options}>Notificações</Text>
-                        <Icon name="chevron-forward-outline" size={20}/>
+                        <Icon name="chevron-forward-outline" size={fontSize-2}/>
                     </TouchableOpacity>
 
                     <TouchableOpacity style={styles.icones} onPress={() => navigation.navigate('Acessibilidade')}>
@@ -38,20 +57,20 @@ const Configuracoes = () => {
                         <Icon name='ellipse-outline' size={25} style={{positon: 'absolute', right: 17}}></Icon>
 
                         <Text style={[styles.options, {right: 20}]}>Acessibilidade</Text>
-                        <Icon name="chevron-forward-outline" size={20}/>
+                        <Icon name="chevron-forward-outline" size={fontSize-2}/>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.icones} onPress={() => navigation.navigate('SegurancaPermissoes')}>
-                        <Icon name='shield-checkmark-outline' size={20} />
+                    {/* <TouchableOpacity style={styles.icones} onPress={() => navigation.navigate('SegurancaPermissoes')}>
+                        <Icon name='shield-checkmark-outline' size={fontSize-2} />
                         <Text style={styles.options}>Segurança e permissões</Text>
-                        <Icon name="chevron-forward-outline" size={20}/>
+                        <Icon name="chevron-forward-outline" size={fontSize-2}/>
                     </TouchableOpacity>
 
                     <TouchableOpacity style={styles.icones} onPress={() => navigation.navigate('CompartilharPerfil')}>
-                        <Icon name='arrow-redo' size={20} />
+                        <Icon name='arrow-redo' size={fontSize-2} />
                         <Text style={styles.options}>Compartilhar perfil</Text>
-                        <Icon name="chevron-forward-outline" size={20}/>
-                    </TouchableOpacity>
+                        <Icon name="chevron-forward-outline" size={fontSize-2}/>
+                    </TouchableOpacity> */}
 
                 </View>
                 <View style={styles.header}>
@@ -60,28 +79,28 @@ const Configuracoes = () => {
                 </View>
                 <View style={styles.content}>
 
-                    <TouchableOpacity style={styles.icones} onPress={() => navigation.navigate('Sobre')}>
-                        <Icon name='information-circle-outline' size={20} />
+      {/*               <TouchableOpacity style={styles.icones} onPress={() => navigation.navigate('Sobre')}>
+                        <Icon name='information-circle-outline' size={fontSize-2} />
                         <Text style={styles.options}>Sobre</Text>
-                        <Icon name="chevron-forward-outline" size={20}/>
-                    </TouchableOpacity>
-
+                        <Icon name="chevron-forward-outline" size={fontSize-2}/>
+                    </TouchableOpacity> */}
+{/* 
                     <TouchableOpacity style={styles.icones} onPress={() => navigation.navigate('AjudaSuporte')}>
-                        <Icon name='person' size={20} />
+                        <Icon name='person' size={fontSize-2} />
                         <Text style={styles.options}>Ajuda e suporte</Text>
-                        <Icon name="chevron-forward-outline" size={20}/>
-                    </TouchableOpacity>
+                        <Icon name="chevron-forward-outline" size={fontSize-2}/>
+                    </TouchableOpacity> */}
 
                     <TouchableOpacity style={styles.icones} onPress={() => navigation.navigate('RelatarProblema')}>
-                        <Icon name='flag' size={20} />
+                        <Icon name='flag' size={fontSize-2} />
                         <Text style={styles.options}>Relatar um problema</Text>
-                        <Icon name="chevron-forward-outline" size={20}/>
+                        <Icon name="chevron-forward-outline" size={fontSize-2}/>
                     </TouchableOpacity>
 
                     <TouchableOpacity style={styles.icones} onPress={() => navigation.navigate('TermosPoliticas')}>
-                        <Icon name='document-text-outline' size={20} />
+                        <Icon name='document-text-outline' size={fontSize-2} />
                         <Text style={styles.options}>Termos e políticas</Text>
-                        <Icon name="chevron-forward-outline" size={20}/>
+                        <Icon name="chevron-forward-outline" size={fontSize-2}/>
                     </TouchableOpacity>
 
                 </View>

@@ -1,10 +1,15 @@
-import React, { useState } from 'react';
-import styles from '../../styles/Configuracoes';
+import React, { useEffect, useState } from 'react';
+import createStyle from '../../styles/Configuracoes';
 import Input from "../../components/TextInput";
 import SelectInput from "../../components/SelectInput";
-import { View, Text, StyleSheet, Image,ScrollView, SafeAreaView, Switch } from 'react-native';
+import { View, Text, StyleSheet, Image,ScrollView, SafeAreaView, Switch, Pressable } from 'react-native';
 import { Navbar } from '../../components/Navbar';
 import { useNavigation } from '@react-navigation/native';
+import { getItem, setItem } from '../../functions/AsyncStorage';
+import axios from 'axios';
+import { API_URL } from '../../constraints';
+import Icon from 'react-native-vector-icons/Ionicons';
+import * as ImagePicker from 'expo-image-picker';
 
 const EditarPerfil = () => {
 
@@ -13,7 +18,138 @@ const EditarPerfil = () => {
 
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
+    const [fontSize, setFontSize] = useState(null);
+
+    const [usuario, setUsuario] = useState({
+        nomeExDetento: '',
+        cpfExDetento: '12345678900',
+        sexoExDetento: null,
+        dataNascExDetento: null,
+        logradouroExDetento: null,
+        numExDetento: null,
+        cepExDetento: null,
+        bairroExDetento: null,
+        cidadeExDetento: null,
+        estadoExDetento: null,
+        outrasInformacoesCurriculo: null,
+        usuario: null,
+        emailUsuario: null,
+        fotoPerfil: null,
+        bannerPerfil: null
+    });
+
+    function formataCPF(cpf){
+        cpf = cpf.replace(/[^\d]/g, "");
+        return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
+      }
+      
+
+    const [photoURI, setPhotoURI] = useState(null);
+
+    const formatarData = (dataISO) => {
+        const data = new Date(dataISO);
+        const dia = String(data.getDate()).padStart(2, '0');
+        const mes = String(data.getMonth() + 1).padStart(2, '0');
+        const ano = data.getFullYear();
+        return `${dia}/${mes}/${ano}`;
+    };
+
+    const pickImage = async () => {
+
+        const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        
+        if (!permissionResult.granted) {
+            alert("Permissão para acessar a galeria é necessária!");
+            return;
+        }
+        
+        const result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+            aspect: [1, 1],
+            quality: 1,
+        });
+        
+        if (!result.canceled) {
+            console.log(result.assets[0].uri);
+            setPhotoURI(result.assets[0].uri);
+
+
+            const formData = new FormData();
+
+            formData.append('foto', {
+                uri: result.assets[0].uri,
+                name: 'foto.jpg',
+                type: 'image/jpeg',
+            });
+            
+            console.log(`${API_URL}/perfil/usuario/${usuario.usuario}`);
+            
+            axios.put(`${API_URL}/perfil/usuario/${usuario.usuario}`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            })
+            .then(res => {
+                console.log("Resposta do servidor:", res.data);
+            })
+            .catch(err => {
+                console.error("Erro:", err);
+            });
+        }
+    };
+
+    const [timestamp, setTimestamp] = useState(new Date().getTime());
+
+    async function getLastUpdate() {
+        const lastupdate = await getItem('lastupdate');
+        setTimestamp(lastupdate);
+    }
+
+    useEffect(() => {
+        getLastUpdate();
+    }, [])
+
+    useEffect(() => {
+        async function fetchFontSize() {
+          const size = await getItem('fontSize');
+          if (!size) {
+            await setItem('fontSize', 18);
+            setFontSize(18);
+          } else {
+            setFontSize(size);
+          }
+        }
+        fetchFontSize();
+
+
+        async function fetchUserData() {
+
+            const token = await getItem('token');
+
+            const formData = new FormData();
+            formData.append('token', token);
+
+            axios.post(`${API_URL}/exDetento/info`, formData, { headers: { 'Content-Type': 'multipart/form-data' }})
+            .then(res => {
+                setPhotoURI(`${API_URL}${res.data.fotoPerfil}?t=${timestamp}`)
+                setUsuario(res.data);
+            })
+            .catch(e => {
+                console.error(e)
+            })
+
+        }
+
+        fetchUserData();
+    }, []);
+
+
+    const styles = createStyle(fontSize);
+
     const navigation = useNavigation();
+
+  
 
     return (
         <SafeAreaView style={styles.container}>
@@ -23,60 +159,44 @@ const EditarPerfil = () => {
             <ScrollView style={{ width: '100%', paddingLeft: '5%', paddingRight: '5%', backgroundColor: '#f5f8ff' }}>
         
                 <View style={styles.imgEditContainer}>
-                    <Image style={styles.imgEdit} source={require('../../../assets/images/usuario-photo.jpg')}/>
+                    <Image style={styles.imgEdit} source={{ uri: photoURI }} />
+                    <Pressable style={{ backgroundColor: 'black', width: 50, height: 50, borderRadius: 50, alignItems: 'center', justifyContent: 'center', position: 'absolute', right: 80, bottom: 0 }} onPress={pickImage}>
+                        <Icon name={"camera-outline"} style={{ color: 'white' }} size={30} />
+                    </Pressable>
                 </View>
                 <View >
-                    <Text style={styles.title}>Maria Silva</Text>
-                    <Text style={{textAlign: 'center', fontSize: 17, color: 'grey'}}>São Paulo, SP</Text>
+                    <Text style={styles.title}>{usuario.nomeExDetento.split(' ')[0]} {usuario.nomeExDetento.split(' ')[usuario.nomeExDetento.split(' ').length-1]}</Text>
+
                     <View style={styles.line} />
                     <View style={{margin: 15}}>
-                        <Text style={{fontSize: 21, fontWeight: 'bold', marginTop: 15}}>Dados Pessoais</Text>
+                        <Text style={{fontSize: fontSize-3, fontWeight: 'bold', marginTop: 15}}>Dados Pessoais</Text>
                         
                         <Input
                             label={'Nome Completo'}
-                            placeholder={'Maria José da Silva'}
+                            value={usuario.nomeExDetento}
                             style={{ width: '90%' }}   
-                        />
-                        <Input
-                            label={'Como Gostaria de ser Chamado? (opcional)'}
-                            placeholder={'Maria Silva'}
-                            style={{ width: '90%' }}   
+                            editable={false}
                         />
                         <Input
                             label={'CPF'}
-                            placeholder={'xxx.xxx.xxx-xx'}
+                            value={formataCPF(usuario.cpfExDetento)}
                             style={{ width: '90%' }}   
+                            editable={false}
                         />
                         <Input
                             label={'Data de Nascimento'}
-                            placeholder={'DD/MM/AAAA'}
-                            style={{ width: '90%' }}   
-                        />
-                        <SelectInput
-                            label="Gênero"
-                            placeholder={'Selecione seu gênero...'}
-                            selectedValue={selectedGenero}  
-                            onValueChange={(value) => setSelectedGenero(value)} 
-                            options={[
-                                { label: 'Feminino', value: 'Feminino' },
-                                { label: 'Masculino', value: 'Masculino' },
-                            ]}
+                            value={formatarData(usuario.dataNascExDetento)}
+                            style={{ width: '90%' }}
+                            editable={false}
                         />
                         <Input
-                            label={'Nome Completo da Mãe'}
-                            placeholder={'Roseli Rosa da Silva'}
-                            style={{ width: '90%' }}   
+                            label={'Sexo'}
+                            value={usuario.sexoExDetento}
+                            style={{ width: '90%' }}
+                            editable={false}
                         />
-                        <View style={styles.switchButton}>
-                            
-                            <Switch
-                                trackColor={{ false: "#767577", true: "grey" }}
-                                thumbColor={isEnabled ? "#ff5733" : "#f4f3f4"}
-                                onValueChange={toggleSwitch}
-                                value={isEnabled}
-                            />
-                            <Text style={{color: 'grey'}}>{isEnabled ? 'Consta.' : 'Não Consta.'}</Text>
-                        </View>
+
+                        
                     </View>
                 </View>
             </ScrollView>

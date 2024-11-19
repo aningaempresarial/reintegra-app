@@ -6,7 +6,7 @@ import LoadingModal from '../components/LoadingModal';
 import { Video, ResizeMode } from 'expo-av';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import videoExplicativo from '../../assets/videos/teste.mp4';
+import videoExplicativo from '../../assets/videos/boasvindas.mp4';
 
 function Welcome() {
   const navigation = useNavigation();

@@ -39,12 +39,12 @@ const Configuracoes = () => {
                     <Text style={styles.subtitle}>Conta e Exibição</Text>
                 </View>
                 <View style={styles.content}>
-
+{/* 
                     <TouchableOpacity style={styles.icones} onPress={() => navigation.navigate('EditarPerfil')}>
                         <Icon name='person' size={fontSize-2} />
                         <Text style={styles.options}>Editar perfil</Text>
                         <Icon name="chevron-forward-outline" size={fontSize-2}/>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
 
                     <TouchableOpacity style={styles.icones} onPress={() => navigation.navigate('Notificacoes')}>
                         <Icon name='notifications-outline' size={fontSize-2} />

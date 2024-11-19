@@ -33,7 +33,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
     margin: 10,
     justifyContent: 'flex-end',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   textRecebidoDiv: {
     flexDirection: 'row',
@@ -50,20 +50,20 @@ export default StyleSheet.create({
     marginHorizontal: 5
   },
   recebidoMensagem: {
-    height: 40,
     backgroundColor: '#cbf5ff',
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 50,
-    paddingHorizontal: 10
+    borderRadius: 10,
+    paddingHorizontal: 10,
+    width: '80%'
   },
   enviadoMensagem: {
-    height: 40,
     backgroundColor: '#f5f5f5',
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 50,
-    paddingHorizontal: 10
+    borderRadius: 10,
+    paddingHorizontal: 10,
+    width: '80%'
   },
   inputDiv: {
     width: '100%',
@@ -74,5 +74,9 @@ export default StyleSheet.create({
   input: {
     width: '100%',
     padding: 10
+  },
+  text: {
+    padding: 10,
+    width: '100%'
   }
 });

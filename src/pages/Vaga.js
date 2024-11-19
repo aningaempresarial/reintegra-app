@@ -121,50 +121,52 @@ function Vaga({ route }) {
             />
 
             
-            <View style={{ width: '90%' }}>
-              <Text style={styles.tituloPost}>Requisitos</Text>
-              <Text style={styles.corpoPost}>{ vaga.requisitosVaga }</Text>
-
-              <Text style={styles.tituloPost}>Salário</Text>
-              <Text style={styles.corpoPost}>R$ { vaga.salarioVaga }</Text>
-
-              <Text style={styles.tituloPost}>Tipo de Contrato</Text>
-              <Text style={styles.corpoPost}>{ vaga.tipoContrato }</Text>
-
-              <Text style={styles.tituloPost}>Escolaridade Mínima</Text>
-              <Text style={styles.corpoPost}>{ vaga.tipoEscolaridade }</Text>
-
-              <Text style={styles.tituloPost}>Carga Horária</Text>
-              <Text style={styles.corpoPost}>{ vaga.cargaHoraria }</Text>
-
-
-              <Text style={styles.tituloPost}>Horário</Text>
-              <Text style={styles.corpoPost}>{ vaga.horarioVaga }</Text>
-
-
-              <TouchableOpacity style={styles.btnVaga} onPress={() => {
-                    setModalCandidato(true)
-
-                    getItem('token')
-                    .then(res => {
-
-
-                      const formData = new FormData();
-                      formData.append('token', res);
-                      formData.append('tituloVaga', nomeVaga)
-          
-                      axios.post(`${API_URL}/post/aplicar-vaga`, formData, {
-                        headers: {
-                          'Content-Type': 'multipart/form-data'
-                        }
-                      })
-                    })
-                    
-                  }}>
-                  <Text style={styles.textBtnVaga}>Aplicar</Text>
-                </TouchableOpacity>
-            </View>
-
+            {vaga.nomeVaga != '' && (
+               <View style={{ width: '90%' }}>
+               <Text style={styles.tituloPost}>Requisitos</Text>
+               <Text style={styles.corpoPost}>{ vaga.requisitosVaga }</Text>
+ 
+               <Text style={styles.tituloPost}>Salário</Text>
+               <Text style={styles.corpoPost}>R$ { vaga.salarioVaga }</Text>
+ 
+               <Text style={styles.tituloPost}>Tipo de Contrato</Text>
+               <Text style={styles.corpoPost}>{ vaga.tipoContrato }</Text>
+ 
+               <Text style={styles.tituloPost}>Escolaridade Mínima</Text>
+               <Text style={styles.corpoPost}>{ vaga.tipoEscolaridade }</Text>
+ 
+               <Text style={styles.tituloPost}>Carga Horária</Text>
+               <Text style={styles.corpoPost}>{ vaga.cargaHoraria }</Text>
+ 
+ 
+               <Text style={styles.tituloPost}>Horário</Text>
+               <Text style={styles.corpoPost}>{ vaga.horarioVaga }</Text>
+ 
+ 
+               <TouchableOpacity style={styles.btnVaga} onPress={() => {
+                     setModalCandidato(true)
+ 
+                     getItem('token')
+                     .then(res => {
+ 
+ 
+                       const formData = new FormData();
+                       formData.append('token', res);
+                       formData.append('tituloVaga', nomeVaga)
+           
+                       axios.post(`${API_URL}/post/aplicar-vaga`, formData, {
+                         headers: {
+                           'Content-Type': 'multipart/form-data'
+                         }
+                       })
+                     })
+                     
+                   }}>
+                   <Text style={styles.textBtnVaga}>Candidatar à Vaga</Text>
+                 </TouchableOpacity>
+             </View>
+ 
+            )}
           </View>
          
          

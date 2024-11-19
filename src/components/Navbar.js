@@ -66,6 +66,7 @@ export function Navbar() {
                             closeModal()
 
                             removeItem('token')
+                            clear()
 
                             navigation.navigate('Start')
                         }}>

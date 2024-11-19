@@ -14,7 +14,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { ResizeMode, Video } from "expo-av";
 
 
-import videoExplicativo from '../../assets/videos/teste.mp4';
+import videoExplicativo from '../../assets/videos/cadastro.mp4';
 
 function NoAccountExplicacao({ route }) {
   

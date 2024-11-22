@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import createStyle from '../styles/PerfilEmpresa';
-import { View, Text, StyleSheet, Image,ScrollView, SafeAreaView, Pressable, Modal } from 'react-native';
+import { View, Text, StyleSheet, Image,ScrollView, SafeAreaView, Pressable, Modal, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Navbar } from '../components/Navbar';
 import { useNavigation } from '@react-navigation/native';
@@ -9,7 +9,6 @@ import { API_URL } from '../constraints';
 import { getItem, setItem } from '../functions/AsyncStorage';
 import { formatarTempoDecorrido } from '../functions/formatarTempo';
 import MapView, { Marker } from 'react-native-maps';
-
 
 const PerfilEmpresa = ({ route }) => {
 
@@ -96,7 +95,7 @@ const PerfilEmpresa = ({ route }) => {
             }
         })
         .catch(err => {
-            console.error(err);
+            console.log(err);
         })
 
         axios.get(`${API_URL}/post/all/${usuario}`)
@@ -104,7 +103,7 @@ const PerfilEmpresa = ({ route }) => {
             setPosts(res.data)
         })
         .catch(err => {
-            console.error(err)
+            console.log(err)
         })
     }, [])
 
@@ -147,11 +146,27 @@ const PerfilEmpresa = ({ route }) => {
                     </Text>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
                         <Text style={styles.text1}>Publicações</Text>
-                        <Text style={styles.text2}>Ver Mais</Text>
+                        <TouchableOpacity onPress={() => {
+                            navigation.replace('Home', { nomeEmpresa: empresa.nomeEmpresa })
+                        }}>
+                            <Text style={styles.text2}>Ver Mais</Text>
+                        </TouchableOpacity>
                     </View>
 
+
                     {posts.slice(0, 2).map((post, i) => (
-                        <View style={styles.vagas} key={i}>
+                        <TouchableOpacity style={styles.vagas} key={i} onPress={() => navigation.navigate("Vaga", {
+                            vagaId: post.idPostagem,
+                            nomeVaga: post.tituloPostagem,
+                            textoVaga: post.conteudoPostagem,
+                            imagemVaga: `${API_URL}${post.imagemPostagem}`,
+                            destaque: {
+                                ...post,
+                                nomeEmpresa: empresa.nomeEmpresa,
+                                fotoPerfil: `${API_URL}${empresa.fotoPerfil}`,
+                                imagem: `${API_URL}${post.imagemPostagem}`,
+                            }
+                            })}>
                             <View style={{ flexDirection: 'row' }}>
                                 <Image  style={{ width: 80, height: 80, borderRadius: 5 }}
                                 source={{ uri: `${API_URL}${post.imagemPostagem}` }}
@@ -162,7 +177,7 @@ const PerfilEmpresa = ({ route }) => {
                                     <Text style={styles.text4}>{ formatarTempoDecorrido(post.dtPostagem) }</Text>
                                 </View>
                             </View>
-                        </View>
+                        </TouchableOpacity>
                     ))}
                     
                

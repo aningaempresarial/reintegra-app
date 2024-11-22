@@ -105,21 +105,28 @@ const Chat = ({ route }) => {
                 }
               >
                 {mensagem.usuario == cnv.nomeUsuario && (
-                  <Image
-                    source={{ uri: `${API_URL}${cnv.fotoPerfil}?t=${timestamp}` }}
-                    style={styles.imgMensagem}
-                  />
+                   <Pressable onPress={() => {
+                    navigation.navigate('PerfilEmpresa', {
+                      usuario: cnv.nomeUsuario
+                    })
+                  }}>
+                    <Image
+                      source={{ uri: `${API_URL}${cnv.fotoPerfil}?t=${timestamp}` }}
+                      style={styles.imgMensagem}
+                    />
+                  </Pressable>
                 )}
                 
                 <View style={mensagem.usuario == cnv.nomeUsuario ? styles.enviadoMensagem : styles.recebidoMensagem}>
-                  <Text style={styles.text}>{mensagem.conteudoMensagem}</Text>
+                  <Text style={[styles.text, { fontSize: fontSize-2 }]}>{mensagem.conteudoMensagem}</Text>
+                  <Text style={[styles.horaMensagem, { fontSize: fontSize-4 }]}>{mensagem.horario}</Text>
                 </View>
               </View>
             ))}
           </ScrollView>
 
           <View style={styles.inputDiv}>
-            <TextInput style={styles.input} onChangeText={(text) => setMensagem(text)} value={mensagem} placeholder="Digite uma mensagem" />
+            <TextInput style={[styles.input, { fontSize: fontSize-2, width: '90%' }]} onChangeText={(text) => setMensagem(text)} value={mensagem} placeholder="Digite uma mensagem" />
             <Icon name={'send-outline'} size={30} style={{
               position: 'absolute',
               right: 10,

@@ -185,13 +185,13 @@ function Vaga({ route }) {
 
           <View style={styles.modalContent}>
 
-            <Text style={styles.text}>Você se candidatou para essa vaga!</Text>
+            <Text style={[styles.text, { fontSize: fontSize }]}>Perfeito ✅</Text>
             <Text style={styles.text}></Text>
 
-            <Text style={styles.textJust}>Agora é só esperar!</Text>
+            <Text style={[styles.textJust, { fontSize: fontSize-2 }]}>Você acaba de se candidatar para essa vaga! Agora é só esperar! 😎</Text>
             <Text style={styles.textJust}></Text>
 
-            <Text style={styles.textJust}>Em breve a empresa entrará em contato com você através do chat!</Text>
+            <Text style={[styles.textJust, { fontSize: fontSize-2 }]}>Em breve a empresa entrará em contato com você através do chat! 💬 </Text>
             <Text style={styles.textJust}></Text>
             
 

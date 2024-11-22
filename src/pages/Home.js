@@ -17,7 +17,11 @@ import Zoom from 'react-native-zoom-reanimated'
 // periodo de atualizações das imagens (atualiza o timestaps que é um parametro passado para enganar o ReactNative)
 const PERIODO_ATUALIZACAO = 20 * 60 * 1000;
 
-const Home = () => {
+const Home = ({ route }) => {
+
+
+  const { nomeEmpresa } = route.params || {};
+
   const navigation = useNavigation();
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -25,6 +29,11 @@ const Home = () => {
   const [filteredPosts, setFilteredPosts] = useState([]);
   const [modalZoomImage, setModalZoomImage] = useState(false);
   const [uriImageModal, setUriImageModal] = useState('');
+
+  const [searchText, setSearchText] = useState("");
+
+
+
 
   const screenWidth = Dimensions.get('window').width;
 
@@ -34,6 +43,10 @@ const Home = () => {
   }
 
   useEffect(() => {
+    if (typeof(nomeEmpresa) != 'undefined') {
+      setSearchText(nomeEmpresa)
+    }
+
     axios.get(`${API_URL}/post/all`)
       .then(res => {
         const destaquesComImagemCompleta = res.data.map(destaque => ({
@@ -108,6 +121,14 @@ const Home = () => {
   useEffect(() => {
     checkTimeToUpdate();
   }, [])
+
+
+  const filteredPosts2 = filteredPosts.filter(
+    (emprego) =>
+      emprego.nomeEmpresa.toLowerCase().includes(searchText.toLowerCase()) ||
+      emprego.tituloPostagem.toLowerCase().includes(searchText.toLowerCase())
+  );
+  
   
   return (
     <SafeAreaView style={styles.container}>
@@ -119,6 +140,8 @@ const Home = () => {
               <TextInput
                   style={styles.searchBar}
                   placeholder="Buscar..."
+                  value={searchText}
+                  onChangeText={(text) => setSearchText(text)}
               />
             </View>
             
@@ -127,156 +150,158 @@ const Home = () => {
             </View>
           </View>
 
-          <PagerView
-            style={styles.bannerContainer}
-            initialPage={1}
-            onPageSelected={(e) => setCurrentPage(e.nativeEvent.position)}
-          >
-            <View style={styles.page} key={1}>
-              <View style={[styles.card, { backgroundColor: '#297996' }]}>
-                <View style={styles.topCard}>
-                  <Text style={styles.textCard}>Novas ações sociais!</Text>
-                  <TouchableOpacity style={styles.buttonCard}>
-                    <Text style={styles.textButtonCard}>Ver Mais</Text>
-                  </TouchableOpacity>
+          {typeof(nomeEmpresa) == 'undefined' && (
+            <>
+              <PagerView
+                style={styles.bannerContainer}
+                initialPage={1}
+                onPageSelected={(e) => setCurrentPage(e.nativeEvent.position)}
+              >
+                <View style={styles.page} key={1}>
+                  <View style={[styles.card, { backgroundColor: '#297996' }]}>
+                    <View style={styles.topCard}>
+                      <Text style={styles.textCard}>Novas ações sociais!</Text>
+                      <TouchableOpacity style={styles.buttonCard}>
+                        <Text style={styles.textButtonCard}>Ver Mais</Text>
+                      </TouchableOpacity>
+                    </View>
+
+                    <View style={styles.bottomCard}>
+                      <Image
+                        style={{ width: '100%', resizeMode: 'contain' }}
+                        source={require('../../assets/images/card-diversidade-image.png')}
+                      />
+                    </View>
+                  </View>
                 </View>
 
-                <View style={styles.bottomCard}>
-                  <Image
-                    style={{ width: '100%', resizeMode: 'contain' }}
-                    source={require('../../assets/images/card-diversidade-image.png')}
-                  />
+                <View style={styles.page} key={2}>
+                  <View style={[styles.card, { backgroundColor: '#ff914d' }]}>
+                    <View style={styles.topCard}>
+                      <Text style={styles.textCard}>Novas vagas publicadas!</Text>
+                      <TouchableOpacity style={styles.buttonCard} onPress={() => navigation.navigate('Vagas')}>
+                        <Text style={styles.textButtonCard}>Ver Mais</Text>
+                      </TouchableOpacity>
+                    </View>
+
+                    <View style={styles.bottomCard}>
+                      <Image
+                        style={{ width: '100%', resizeMode: 'contain' }}
+                        source={require('../../assets/images/card-vagas-image.png')}
+                      />
+                    </View>
+                  </View>
                 </View>
+
+                <View style={styles.page} key={3}>
+                  <View style={[styles.card, { backgroundColor: '#1e8674' }]}>
+                    <View style={styles.topCard}>
+                      <Text style={styles.textCard}>Novos eventos publicados!</Text>
+                      <TouchableOpacity style={styles.buttonCard}>
+                        <Text style={styles.textButtonCard}>Ver Mais</Text>
+                      </TouchableOpacity>
+                    </View>
+
+                    <View style={styles.bottomCard}>
+                      <Image
+                        style={{ width: '100%', resizeMode: 'contain' }}
+                        source={require('../../assets/images/card-social-image.png')}
+                      />
+                    </View>
+                  </View>
+                </View>
+
+              </PagerView>
+
+              <View style={styles.menuIndicator}>
+                <IconA
+                  name={currentPage === 0 ? 'circle' : 'circle'}
+                  size={18}
+                  color={currentPage === 0 ? '#112257' : '#dddddd'}
+                />
+                <IconA
+                  name={currentPage === 1 ? 'circle' : 'circle'}
+                  size={18}
+                  color={currentPage === 1 ? '#112257' : '#dddddd'}
+                />
+                <IconA
+                  name={currentPage === 2 ? 'circle' : 'circle'}
+                  size={18}
+                  color={currentPage === 2 ? '#112257' : '#dddddd'}
+                />
               </View>
-            </View>
 
-            <View style={styles.page} key={2}>
-              <View style={[styles.card, { backgroundColor: '#ff914d' }]}>
-                <View style={styles.topCard}>
-                  <Text style={styles.textCard}>Novas vagas publicadas!</Text>
-                  <TouchableOpacity style={styles.buttonCard} onPress={() => navigation.navigate('Vagas')}>
-                    <Text style={styles.textButtonCard}>Ver Mais</Text>
-                  </TouchableOpacity>
-                </View>
-
-                <View style={styles.bottomCard}>
+              <Text style={styles.subtitle}>Categorias</Text>
+              <View style={styles.cardCategoriasContainer}>
+                <TouchableOpacity
+                  style={[
+                    styles.cardCategoria, 
+                    { 
+                      marginLeft: 0, 
+                      borderWidth: selectedCategories.length > 0 && selectedCategories.includes('emprego') ? 1 : 1,
+                      borderColor: selectedCategories.includes('emprego') ? '#414d86' : 'transparent',
+                      opacity: selectedCategories.length === 0 || selectedCategories.includes('emprego') ? 1 : 0.4
+                    }
+                  ]}
+                  onPress={() => filterPostsByCategory('emprego')}
+                >
                   <Image
-                    style={{ width: '100%', resizeMode: 'contain' }}
-                    source={require('../../assets/images/card-vagas-image.png')}
+                    style={styles.cardCategoriaImage}
+                    source={require('../../assets/images/emprego-card-image.png')}
                   />
-                </View>
-              </View>
-            </View>
+                  <Text style={styles.textCategoria}>
+                    Emprego
+                  </Text>
+                </TouchableOpacity>
 
-            <View style={styles.page} key={3}>
-              <View style={[styles.card, { backgroundColor: '#1e8674' }]}>
-                <View style={styles.topCard}>
-                  <Text style={styles.textCard}>Novos eventos publicados!</Text>
-                  <TouchableOpacity style={styles.buttonCard}>
-                    <Text style={styles.textButtonCard}>Ver Mais</Text>
-                  </TouchableOpacity>
-                </View>
-
-                <View style={styles.bottomCard}>
+                <TouchableOpacity
+                  style={[
+                    styles.cardCategoria, 
+                    { 
+                      borderWidth: selectedCategories.length > 0 && selectedCategories.includes('informativo') ? 1 : 1,
+                      borderColor: selectedCategories.includes('informativo') ? '#414d86' : 'transparent',
+                      opacity: selectedCategories.length === 0 || selectedCategories.includes('informativo') ? 1 : 0.4
+                    }
+                  ]}
+                  onPress={() => filterPostsByCategory('informativo')}
+                >
                   <Image
-                    style={{ width: '100%', resizeMode: 'contain' }}
-                    source={require('../../assets/images/card-social-image.png')}
+                    style={styles.cardCategoriaImage}
+                    source={require('../../assets/images/educacao-card-image.png')}
                   />
-                </View>
+                  <Text style={styles.textCategoria}>
+                    Informação
+                  </Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={[
+                    styles.cardCategoria, 
+                    { 
+                      marginRight: 0, 
+                      borderWidth: selectedCategories.length > 0 && selectedCategories.includes('divulgacao') ? 1 : 1,
+                      borderColor: selectedCategories.includes('divulgacao') ? '#414d86' : 'transparent',
+                      opacity: selectedCategories.length === 0 || selectedCategories.includes('divulgacao') ? 1 : 0.4 
+                    }
+                  ]}
+                  onPress={() => filterPostsByCategory('divulgacao')}
+                >
+                  <Image
+                    style={styles.cardCategoriaImage}
+                    source={require('../../assets/images/cultura-card-image.png')}
+                  />
+                  <Text style={styles.textCategoria}>
+                    Divulgação
+                  </Text>
+                </TouchableOpacity>
               </View>
-            </View>
-
-          </PagerView>
-
-          <View style={styles.menuIndicator}>
-            <IconA
-              name={currentPage === 0 ? 'circle' : 'circle'}
-              size={18}
-              color={currentPage === 0 ? '#112257' : '#dddddd'}
-            />
-            <IconA
-              name={currentPage === 1 ? 'circle' : 'circle'}
-              size={18}
-              color={currentPage === 1 ? '#112257' : '#dddddd'}
-            />
-            <IconA
-              name={currentPage === 2 ? 'circle' : 'circle'}
-              size={18}
-              color={currentPage === 2 ? '#112257' : '#dddddd'}
-            />
-          </View>
-
-          <Text style={styles.subtitle}>Categorias</Text>
-          <View style={styles.cardCategoriasContainer}>
-            <TouchableOpacity
-              style={[
-                styles.cardCategoria, 
-                { 
-                  marginLeft: 0, 
-                  borderWidth: selectedCategories.length > 0 && selectedCategories.includes('emprego') ? 1 : 1,
-                  borderColor: selectedCategories.includes('emprego') ? '#414d86' : 'transparent',
-                  opacity: selectedCategories.length === 0 || selectedCategories.includes('emprego') ? 1 : 0.4
-                }
-              ]}
-              onPress={() => filterPostsByCategory('emprego')}
-            >
-              <Image
-                style={styles.cardCategoriaImage}
-                source={require('../../assets/images/emprego-card-image.png')}
-              />
-              <Text style={styles.textCategoria}>
-                Emprego
-              </Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={[
-                styles.cardCategoria, 
-                { 
-                  borderWidth: selectedCategories.length > 0 && selectedCategories.includes('informativo') ? 1 : 1,
-                  borderColor: selectedCategories.includes('informativo') ? '#414d86' : 'transparent',
-                  opacity: selectedCategories.length === 0 || selectedCategories.includes('informativo') ? 1 : 0.4
-                }
-              ]}
-              onPress={() => filterPostsByCategory('informativo')}
-            >
-              <Image
-                style={styles.cardCategoriaImage}
-                source={require('../../assets/images/educacao-card-image.png')}
-              />
-              <Text style={styles.textCategoria}>
-                Informação
-              </Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={[
-                styles.cardCategoria, 
-                { 
-                  marginRight: 0, 
-                  borderWidth: selectedCategories.length > 0 && selectedCategories.includes('divulgacao') ? 1 : 1,
-                  borderColor: selectedCategories.includes('divulgacao') ? '#414d86' : 'transparent',
-                  opacity: selectedCategories.length === 0 || selectedCategories.includes('divulgacao') ? 1 : 0.4 
-                }
-              ]}
-              onPress={() => filterPostsByCategory('divulgacao')}
-            >
-              <Image
-                style={styles.cardCategoriaImage}
-                source={require('../../assets/images/cultura-card-image.png')}
-              />
-              <Text style={styles.textCategoria}>
-                Divulgação
-              </Text>
-            </TouchableOpacity>
-          </View>
-
-
-
+            </>
+          )}
+          
 
           <View style={styles.oportunidadesContainer}>
 
-            {filteredPosts.map((destaque, i) => (
+            {filteredPosts2.map((destaque, i) => (
               <View style={styles.oportunidadeCard} key={i}>
 
 

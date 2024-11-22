@@ -43,7 +43,7 @@ export function Navbar() {
 
                         <Pressable style={styles.itemMenu} onPress={() => navigation.navigate('Home')}>
                             <Icon name='home-outline' size={40} />
-                            <Text style={styles.item}>Home</Text>
+                            <Text style={styles.item}>Início</Text>
                         </Pressable>
                         <Pressable style={styles.itemMenu} onPress={() => navigation.navigate('Chats')}>
                             <Icon name='chatbubble-outline' size={40} />

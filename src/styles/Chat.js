@@ -39,7 +39,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
     margin: 10,
     justifyContent: 'right',
-    alignItems: 'center'
+    alignItems: 'flex-start'
   },
   imgMensagem: {
     width: 50,
@@ -78,5 +78,11 @@ export default StyleSheet.create({
   text: {
     padding: 10,
     width: '100%'
+  },
+  horaMensagem: {
+    paddingBottom: 5,
+    paddingHorizontal: 10,
+    width: '100%',
+    textAlign: 'right',
   }
 });

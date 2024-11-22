@@ -84,7 +84,7 @@ const Chats = () => {
       <Navbar />
       <ScrollView style={{ width: "100%", backgroundColor: "#f5f8ff" }}>
         <View style={styles.main}>
-          <View style={styles.searchBarContainer}>
+          {/* <View style={styles.searchBarContainer}>
             <View style={styles.searchBarDiv}>
               <TextInput style={styles.searchBar} placeholder="Buscar..." />
             </View>
@@ -92,11 +92,9 @@ const Chats = () => {
             <View style={styles.searchIconDiv}>
               <Icon name="search" size={30} />
             </View>
-          </View>
+          </View> */}
 
           <Text style={styles.title}>Chats</Text>
-
-    
 
           <View style={styles.listaContatosContainer}>
 
@@ -107,7 +105,7 @@ const Chats = () => {
                 </View>
                 <View style={styles.infosContatoContainer}>
                     <View style={styles.infosContato}>
-                        <Text style={styles.nomeContato}>{chat.nomeUsuario}</Text>
+                        <Text style={[styles.nomeContato]}>{chat.nomeUsuario}</Text>
                     </View>
                     <View style={styles.mensagemContatoContainer}>
                         <Text style={styles.mensagemContato}>{chat.mensagens[chat.mensagens.length-1].conteudoMensagem}</Text>

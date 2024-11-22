@@ -53,7 +53,7 @@ const Acessibilidade = () => {
                     value={fontSize}
                     minimumValue={18}
                     maximumValue={40}
-                    step={8}
+                    step={5}
                     minimumTrackTintColor="grey"
                     maximumTrackTintColor="#767577"
                     thumbTintColor="#ff5733"

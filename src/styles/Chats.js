@@ -12,7 +12,7 @@ export default StyleSheet.create({
     color: '#112257',
     textAlign: 'center',
     width: '90%',
-    marginVertical: 20,
+    marginVertical: 10,
     fontFamily: 'Poppins_700Bold'
   },
   main: {

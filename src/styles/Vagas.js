@@ -49,10 +49,10 @@ export default StyleSheet.create({
   vagasContainer: {
     flex: 1,
     alignItems: 'center',
-    width: 320,
+    width: '90%',
   },
   cardCultura: {
-    width: 'fit-content',
+    width: '100%',
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
@@ -69,7 +69,8 @@ export default StyleSheet.create({
     width: 120,
     height: 120,
     alignItems: 'left',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    flex: 1
   },
   imgVaga: {
     width: '100%',
@@ -83,6 +84,7 @@ export default StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-evenly',
+    flex: 2
   },
   textVaga: {
     fontSize: 18,
